@@ -3,8 +3,6 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.5
-
 buildscript {
     repositories {
         jcenter()
@@ -24,6 +22,13 @@ jar {
     version =  '0.0.1-SNAPSHOT'
 }
 
+bootRepackage {
+    mainClass = 'info.xsh.down.core.DoneApplication'
+}
+springBoot {
+    mainClass = 'info.xsh.down.core.DoneApplication'
+}
+
 repositories {
     jcenter()
     maven { url "http://repo.spring.io/snapshot" }
@@ -32,5 +37,9 @@ repositories {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
     testCompile("org.springframework.boot:spring-boot-starter-test")
+
+    compile('org.hsqldb:hsqldb')
+    runtime('mysql:mysql-connector-java')
 }
