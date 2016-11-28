@@ -1,4 +1,4 @@
-package info.xsh.down.core.api;
+package info.xsh.down.core.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
