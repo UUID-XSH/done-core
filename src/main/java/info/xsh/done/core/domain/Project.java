@@ -1,8 +1,10 @@
-package info.xsh.down.core.domain;
+package info.xsh.done.core.domain;
 
 import lombok.Data;
+import sun.jvm.hotspot.oops.Instance;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 /**
  * Created by xiaohuo on 16/11/28.
@@ -17,14 +19,14 @@ public class Project {
 	@Column(name = "name")
 	private String name; // 项目名称
 	@Column(name = "create_time")
-	private String createTime; // 创建时间
+	private String createTime = Instant.now().toString(); // 创建时间
 	@Column(name = "achieved")
 	@Enumerated(EnumType.STRING)
-	private YesOrNo isAchieved; // 是否完成
+	private YesOrNo isAchieved = YesOrNo.NO; // 是否完成
 	@Column(name = "archived")
-	private YesOrNo isArchived; // 是否归档
+	private YesOrNo isArchived = YesOrNo.NO; // 是否归档
 	@Column(name = "user_id")
-	private int userId;
+	private long userId;
 
 	enum YesOrNo {
 		YES, NO

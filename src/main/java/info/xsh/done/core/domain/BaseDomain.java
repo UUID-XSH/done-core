@@ -1,4 +1,4 @@
-package info.xsh.down.core.domain;
+package info.xsh.done.core.domain;
 
 /**
  * Created by xiaohuo on 16/11/28.

@@ -1,6 +1,6 @@
-package info.xsh.down.core.repository;
+package info.xsh.done.core.repository;
 
-import info.xsh.down.core.domain.Project;
+import info.xsh.done.core.domain.SubTask;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * Created by xiaohuo on 16/11/29.
  */
 @Repository
-public interface ProjectRepository extends CrudRepository<Project,Long> {
+public interface SubTaskRepository extends CrudRepository<SubTask,Long> {
 }

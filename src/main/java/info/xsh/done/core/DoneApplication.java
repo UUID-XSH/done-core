@@ -1,6 +1,5 @@
-package info.xsh.down.core;
+package info.xsh.done.core;
 
-import org.flywaydb.core.Flyway;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

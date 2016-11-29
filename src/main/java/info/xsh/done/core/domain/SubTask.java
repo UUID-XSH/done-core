@@ -1,4 +1,4 @@
-package info.xsh.down.core.domain;
+package info.xsh.done.core.domain;
 
 import lombok.Data;
 
