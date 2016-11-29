@@ -1,15 +1,13 @@
 package info.xsh.done.core.repository;
 
-import info.xsh.done.core.domain.Project;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import info.xsh.done.core.domain.Project;
 
 /**
  * Created by xiaohuo on 16/11/29.
  */
 @Repository
-public interface ProjectRepository extends CrudRepository<Project, Long> {
-	Optional<Project> findById();
+public interface ProjectRepository extends PagingAndSortingRepository<Project,Long> {
 }

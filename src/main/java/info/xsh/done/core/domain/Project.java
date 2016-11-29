@@ -1,10 +1,12 @@
 package info.xsh.done.core.domain;
 
 import lombok.Data;
+import org.springframework.data.annotation.Persistent;
 import sun.jvm.hotspot.oops.Instance;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 /**
  * Created by xiaohuo on 16/11/28.
@@ -19,7 +21,7 @@ public class Project {
 	@Column(name = "name")
 	private String name; // 项目名称
 	@Column(name = "create_time")
-	private String createTime = Instant.now().toString(); // 创建时间
+	private LocalDateTime createTime = LocalDateTime.now(); // 创建时间
 	@Column(name = "achieved")
 	@Enumerated(EnumType.STRING)
 	private YesOrNo isAchieved = YesOrNo.NO; // 是否完成

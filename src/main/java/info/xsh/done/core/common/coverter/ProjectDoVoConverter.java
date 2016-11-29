@@ -3,6 +3,7 @@ package info.xsh.done.core.common.coverter;
 import com.google.common.base.Converter;
 import info.xsh.done.core.controller.vo.ProjectVo;
 import info.xsh.done.core.domain.Project;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by xiaohuo on 16/11/29.

@@ -1,13 +1,13 @@
 package info.xsh.done.core.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import info.xsh.done.core.common.coverter.ProjectDoVoConverter;
 import info.xsh.done.core.controller.vo.ProjectVo;
 import info.xsh.done.core.domain.Project;
 import info.xsh.done.core.service.ProjectService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by xiaohuo on 16/11/28.
@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(value = "/api/v1.0", produces = "application/json")
+@Slf4j
 public class ProjectController extends BaseController {
 
-	private Logger logger = LoggerFactory.getLogger(ProjectController.class);
-
-	@Autowired
-	private ProjectDoVoConverter projectDoVoConverter;
+	private ProjectDoVoConverter projectDoVoConverter = new ProjectDoVoConverter();
 
 	@Autowired
 	private ProjectService projectService;
@@ -29,9 +27,9 @@ public class ProjectController extends BaseController {
 	 * 添加项目
 	 */
 	@RequestMapping(value = "/projects", method = RequestMethod.POST)
-	public void add(@RequestBody ProjectVo projectVo) {
+	public Project add(@RequestBody ProjectVo projectVo) {
 		Project project = projectDoVoConverter.reverse().convert(projectVo);
-		projectService.add(project);
+		return projectService.add(project);
 
 	}
 
@@ -40,7 +38,7 @@ public class ProjectController extends BaseController {
 	 */
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public void getAll() {
-		logger.info("ok");
+		log.info("ok");
 	}
 
 	/**
@@ -58,7 +56,7 @@ public class ProjectController extends BaseController {
 	 * 
 	 * @param id
 	 */
-	@RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/projects/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable String id) {
 
 	}
@@ -66,7 +64,7 @@ public class ProjectController extends BaseController {
 	/**
 	 * 恢复单个项目
 	 */
-	@RequestMapping(value = "projects/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "projects/{id}", method = RequestMethod.PUT)
 	public void restore(@PathVariable String id) {
 
 	}
