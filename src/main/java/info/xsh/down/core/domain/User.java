@@ -8,20 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by xiaohuo on 16/11/28.
+ * Created by xiaohuo on 16/11/29.
  */
 @Entity
-@Table(name = "sub_task")
+@Table(name = "user")
 @Data
-public class SubTask {
+public class User {
     @Id
     @Column(name = "id")
     private long id;
     @Column(name = "name")
-    private String name; // 任务名称
-    @Column(name = "detail")
-    private String detail; // 详情
-    @Column(name = "task_id")
-    private long taskId;
-
+    private String name;
 }
