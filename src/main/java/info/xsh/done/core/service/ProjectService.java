@@ -6,6 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Created by xiaohuo on 16/11/29.
  */
@@ -16,10 +20,19 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository projectRepository;
 
-	public Project add(Project project) {
-
-		log.info("11111");
+	public Project save(Project project) {
+		log.info(String.format("save entity: %s", project.toString()));
 
 		return projectRepository.save(project);
 	}
+
+	public Iterable<Project> findAll(){
+		return projectRepository.findAll();
+	}
+
+	public Optional<Project> findById(String id){
+		return Optional.ofNullable(projectRepository.findOne(Long.valueOf(id)));
+	}
+
+
 }

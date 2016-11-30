@@ -20,7 +20,7 @@ public class Project {
 	private long id; // 项目id
 	@Column(name = "name")
 	private String name; // 项目名称
-	@Column(name = "create_time")
+	@Column(name = "create_time",columnDefinition ="TIMESTAMP" )
 	private LocalDateTime createTime = LocalDateTime.now(); // 创建时间
 	@Column(name = "achieved")
 	@Enumerated(EnumType.STRING)
@@ -30,7 +30,7 @@ public class Project {
 	@Column(name = "user_id")
 	private long userId;
 
-	enum YesOrNo {
+	public enum YesOrNo {
 		YES, NO
 	}
 }

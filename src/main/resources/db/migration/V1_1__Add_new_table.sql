@@ -9,7 +9,7 @@ CREATE TABLE `User` (
 CREATE TABLE `Project` (
   `id`          BIGINT AUTO_INCREMENT,
   `name`        VARCHAR(1000),
-  `create_time` DATETIME,
+  `create_time` TIMESTAMP,
   `achieved`    VARCHAR(50) COMMENT '是否完成',
   `archived`    VARCHAR(50) COMMENT '是否归档',
   `user_id`     BIGINT,
