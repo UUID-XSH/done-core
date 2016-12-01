@@ -17,7 +17,7 @@ apply plugin: 'org.springframework.boot'
 
 jar {
     baseName = 'myproject'
-    version =  '0.0.1-SNAPSHOT'
+    version = '0.0.1-SNAPSHOT'
 }
 
 bootRepackage {
@@ -43,6 +43,5 @@ dependencies {
     compile "org.flywaydb:flyway-core:4.0.3"
 //    compile('org.hsqldb:hsqldb')
     runtime('mysql:mysql-connector-java')
-
     compile 'com.github.yannxia:chameleon:-SNAPSHOT'
 }

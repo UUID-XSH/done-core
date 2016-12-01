@@ -1,10 +1,9 @@
 package info.xsh.done.core.controller;
 
+import info.xsh.done.core.common.coverter.UserDoVoConverter;
 import info.xsh.done.core.controller.vo.UserVo;
 import info.xsh.done.core.domain.User;
-import info.xsh.done.core.service.ProjectService;
 import info.xsh.done.core.service.UserService;
-import info.yannxia.java.chameleon.ConvertFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import java.util.List;
 
 
 /**
- * Created by xiaohuo on 16/12/1.
+ * author : misha
  */
 @RestController
 @RequestMapping(value = "/api/v1.0", produces = "application/json")
@@ -23,51 +22,45 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private ProjectService projectService;
-
-    @Autowired
     private UserService userService;
 
-    @Autowired
-    ConvertFactory convertFactory;
+    private UserDoVoConverter userDoVoConverter = new UserDoVoConverter();
 
     /**
-     *
      * @param userVo
      * @return
      */
-    @RequestMapping(value = "users/create", method = RequestMethod.POST)
-    public User create(@RequestBody UserVo userVo) {
-        User user = convertFactory.convert(User.class, userVo);
-        return userService.save(user);
+    @RequestMapping(value = "users", method = RequestMethod.POST)
+    public UserVo create(@RequestBody UserVo userVo) {
+        return userDoVoConverter.reverse().convert(userService.save(userDoVoConverter.convert(userVo)));
     }
 
     /**
-     *
      * @return
      */
-    @RequestMapping(value = "users/all", method = RequestMethod.GET)
+    @RequestMapping(value = "users", method = RequestMethod.GET)
     public List<UserVo> get() {
         List<UserVo> userVos = new ArrayList<>();
         Iterable<User> users = userService.findAll();
-        while (users.iterator().hasNext()) {
-            userVos.add(convertFactory.convert(UserVo.class, users.iterator().next()));
+        for (User user : users) {
+            userVos.add(userDoVoConverter.reverse().convert(user));
         }
+
         return userVos;
     }
 
     /**
-     *
      * @param user_id
      * @return
      */
     @RequestMapping(value = "users/{user_id}", method = RequestMethod.GET)
     public UserVo get(@PathVariable String user_id) {
         User user = userService.findById(user_id).orElseThrow(() -> new IllegalArgumentException("用户不存在"));
-        return convertFactory.convert(UserVo.class, user);
+        return userDoVoConverter.reverse().convert(user);
     }
 
     /**
+     * 更新
      *
      * @param user_id
      * @param userVo
