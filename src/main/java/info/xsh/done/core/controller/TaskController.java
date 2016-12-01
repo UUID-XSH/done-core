@@ -1,6 +1,7 @@
 package info.xsh.done.core.controller;
 
 import info.xsh.done.core.common.coverter.TaskDoVoConverter;
+import info.xsh.done.core.controller.vo.ResponseVo;
 import info.xsh.done.core.controller.vo.TaskVo;
 import info.xsh.done.core.domain.Task;
 import info.xsh.done.core.service.TaskService;
@@ -29,10 +30,13 @@ public class TaskController extends BaseController {
      * @return
      */
 	@RequestMapping(value = "tasks", method = RequestMethod.POST)
-	public TaskVo save(@RequestBody TaskVo taskVo) {
+	public ResponseVo save(@RequestBody TaskVo taskVo) {
+        ResponseVo responseVo =new ResponseVo();
         Task task = taskService.save(taskDoVoConverter.reverse().convert(taskVo));
         log.info(String.format("Task have been save: %s",task.toString()));
-        return taskDoVoConverter.convert(task);
+        responseVo.setCode(200);
+        responseVo.setRes(taskDoVoConverter.convert(task));
+        return responseVo;
 	}
 
 }
