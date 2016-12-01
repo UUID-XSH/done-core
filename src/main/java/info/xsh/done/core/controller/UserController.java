@@ -19,30 +19,20 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/v1.0", produces = "application/json")
 @Slf4j
-public class UserController extends BaseController {
+public class UserController {
 
     @Autowired
     private UserService userService;
 
-<<<<<<< HEAD
     private UserDoVoConverter userDoVoConverter = new UserDoVoConverter();
-=======
->>>>>>> 53a1ef4527f4498dd9c39b2dddcb7b22cb0784b4
 
     /**
      * @param userVo
      * @return
      */
-<<<<<<< HEAD
     @RequestMapping(value = "users", method = RequestMethod.POST)
     public UserVo create(@RequestBody UserVo userVo) {
         return userDoVoConverter.reverse().convert(userService.save(userDoVoConverter.convert(userVo)));
-=======
-    @RequestMapping(value = "users/create", method = RequestMethod.POST)
-    public User create(@RequestBody UserVo userVo) {
-        User user = convertFactory().convert(User.class, userVo);
-        return userService.save(user);
->>>>>>> 53a1ef4527f4498dd9c39b2dddcb7b22cb0784b4
     }
 
     /**
@@ -52,13 +42,8 @@ public class UserController extends BaseController {
     public List<UserVo> get() {
         List<UserVo> userVos = new ArrayList<>();
         Iterable<User> users = userService.findAll();
-<<<<<<< HEAD
         for (User user : users) {
             userVos.add(userDoVoConverter.reverse().convert(user));
-=======
-        while (users.iterator().hasNext()) {
-            userVos.add(convertFactory().convert(UserVo.class, users.iterator().next()));
->>>>>>> 53a1ef4527f4498dd9c39b2dddcb7b22cb0784b4
         }
 
         return userVos;
@@ -71,19 +56,12 @@ public class UserController extends BaseController {
     @RequestMapping(value = "users/{user_id}", method = RequestMethod.GET)
     public UserVo get(@PathVariable String user_id) {
         User user = userService.findById(user_id).orElseThrow(() -> new IllegalArgumentException("用户不存在"));
-<<<<<<< HEAD
         return userDoVoConverter.reverse().convert(user);
     }
 
     /**
      * 更新
      *
-=======
-        return convertFactory().convert(UserVo.class, user);
-    }
-
-    /**
->>>>>>> 53a1ef4527f4498dd9c39b2dddcb7b22cb0784b4
      * @param user_id
      * @param userVo
      * @return
