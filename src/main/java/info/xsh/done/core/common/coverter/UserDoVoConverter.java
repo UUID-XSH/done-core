@@ -3,6 +3,7 @@ package info.xsh.done.core.common.coverter;
 import com.google.common.base.Converter;
 import info.xsh.done.core.controller.vo.UserVo;
 import info.xsh.done.core.domain.User;
+import info.yannxia.java.chameleon.annonation.Convertor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDoVoConverter extends Converter<UserVo, User> {
     @Override
-    protected User doForward(UserVo userVo) {
+    @Convertor
+    public User doForward(UserVo userVo) {
         User user = new User();
         user.setPassWord(userVo.getPassWord());
         user.setName(userVo.getName());
@@ -20,7 +22,8 @@ public class UserDoVoConverter extends Converter<UserVo, User> {
     }
 
     @Override
-    protected UserVo doBackward(User user) {
+    @Convertor
+    public UserVo doBackward(User user) {
         UserVo userVo = new UserVo();
         userVo.setId(user.getId());
         userVo.setName(user.getName());
