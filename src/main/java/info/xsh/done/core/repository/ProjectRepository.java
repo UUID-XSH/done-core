@@ -5,9 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import info.xsh.done.core.domain.Project;
 
+import java.util.List;
+
 /**
  * Created by xiaohuo on 16/11/29.
  */
 @Repository
-public interface ProjectRepository extends PagingAndSortingRepository<Project,Long> {
+public interface ProjectRepository extends PagingAndSortingRepository<Project, Long> {
+    List<Project> findByUserIdAndIsAchievedAndIsArchived(long userId, Project.YesOrNo isAchieved, Project.YesOrNo isArchived);
 }

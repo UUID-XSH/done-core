@@ -5,13 +5,10 @@ apply plugin: 'java'
 
 buildscript {
     repositories {
-        jcenter()
-        maven { url "http://repo.spring.io/snapshot" }
-        maven { url "http://repo.spring.io/milestone" }
-
+        maven { url 'http://repo.spring.io/plugins-release' }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.BUILD-SNAPSHOT")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE")
     }
 }
 
@@ -26,14 +23,13 @@ jar {
 bootRepackage {
     mainClass = 'info.xsh.down.core.DoneApplication'
 }
+
 springBoot {
     mainClass = 'info.xsh.down.core.DoneApplication'
 }
 
 repositories {
     jcenter()
-    maven { url "http://repo.spring.io/snapshot" }
-    maven { url "http://repo.spring.io/milestone" }
     maven { url 'https://jitpack.io' }
 }
 
