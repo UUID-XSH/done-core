@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/v1.0", produces = "application/json")
 @Slf4j
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     private ProjectService projectService;
@@ -28,22 +28,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    ConvertFactory convertFactory;
 
     /**
-     *
      * @param userVo
      * @return
      */
     @RequestMapping(value = "users/create", method = RequestMethod.POST)
     public User create(@RequestBody UserVo userVo) {
-        User user = convertFactory.convert(User.class, userVo);
+        User user = convertFactory().convert(User.class, userVo);
         return userService.save(user);
     }
 
     /**
-     *
      * @return
      */
     @RequestMapping(value = "users/all", method = RequestMethod.GET)
@@ -51,24 +47,22 @@ public class UserController {
         List<UserVo> userVos = new ArrayList<>();
         Iterable<User> users = userService.findAll();
         while (users.iterator().hasNext()) {
-            userVos.add(convertFactory.convert(UserVo.class, users.iterator().next()));
+            userVos.add(convertFactory().convert(UserVo.class, users.iterator().next()));
         }
         return userVos;
     }
 
     /**
-     *
      * @param user_id
      * @return
      */
     @RequestMapping(value = "users/{user_id}", method = RequestMethod.GET)
     public UserVo get(@PathVariable String user_id) {
         User user = userService.findById(user_id).orElseThrow(() -> new IllegalArgumentException("用户不存在"));
-        return convertFactory.convert(UserVo.class, user);
+        return convertFactory().convert(UserVo.class, user);
     }
 
     /**
-     *
      * @param user_id
      * @param userVo
      * @return
