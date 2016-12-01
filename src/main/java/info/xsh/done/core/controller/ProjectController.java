@@ -40,7 +40,7 @@ public class ProjectController extends BaseController {
 	/**
 	 * 添加项目
 	 */
-	@RequestMapping(value = "/projects", method = RequestMethod.POST)
+	@RequestMapping(value = "users/{user_id}/projects", method = RequestMethod.POST)
 	public Project add(@RequestBody ProjectVo projectVo) {
 		Project project = projectDoVoConverter.reverse().convert(projectVo);
 		return projectService.save(project);
@@ -51,7 +51,7 @@ public class ProjectController extends BaseController {
 	 * 获取所有项目
 	 * 不带Task详情
 	 */
-	@RequestMapping(value = "/projects", method = RequestMethod.GET)
+	@RequestMapping(value = "users/{user_id}/projects/", method = RequestMethod.GET)
 	public Iterable<Project> getAll() {
 		return projectService.findAll();
 	}
@@ -61,7 +61,7 @@ public class ProjectController extends BaseController {
 	 * 带Task详情
 	 * @param id
 	 */
-	@RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "users/{user_id}/projects/{id}", method = RequestMethod.GET)
 	public ProjectVo get(@PathVariable String id) {
 		Project project = projectService.findById(id).orElseThrow(() -> new IllegalArgumentException("项目不存在"));
 		ProjectVo projectVo = projectDoVoConverter.convert(project);
@@ -77,7 +77,7 @@ public class ProjectController extends BaseController {
 	 * 
 	 * @param id
 	 */
-	@RequestMapping(value = "/projects/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "users/{user_id}/projects/{id}", method = RequestMethod.DELETE)
 	public Project delete(@PathVariable String id) {
 		Project project = projectService.findById(id).orElseThrow(() -> new RuntimeException("项目不存在"));
 		project.setIsArchived(Project.YesOrNo.YES);
@@ -87,7 +87,7 @@ public class ProjectController extends BaseController {
 	/**
 	 * 恢复单个项目
 	 */
-	@RequestMapping(value = "projects/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "users/{user_id}/projects/{id}", method = RequestMethod.PUT)
 	public Project restore(@PathVariable String id) {
 		Project project = projectService.findById(id).orElseThrow(() -> new RuntimeException("项目不存在"));
 		project.setIsArchived(Project.YesOrNo.NO);
