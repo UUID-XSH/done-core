@@ -2,6 +2,7 @@
 CREATE TABLE `User` (
   `id`   BIGINT AUTO_INCREMENT,
   `name` VARCHAR(50),
+  `pass_word` VARCHAR(50),
   PRIMARY KEY (`id`)
 );
 

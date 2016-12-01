@@ -1,13 +1,14 @@
 package info.xsh.done.core.common.coverter;
 
 import com.google.common.base.Converter;
-
 import info.xsh.done.core.controller.vo.TaskVo;
 import info.xsh.done.core.domain.Task;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by xiaohuo on 16/11/30.
  */
+@Component
 public class TaskDoVoConverter extends Converter<Task, TaskVo> {
 
     @Override
