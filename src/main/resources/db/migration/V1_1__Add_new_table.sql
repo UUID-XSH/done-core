@@ -27,12 +27,22 @@ CREATE TABLE `Task` (
   FOREIGN KEY (`project_id`) REFERENCES `Project` (`id`)
 );
 
-# subTask
-CREATE TABLE `Sub_Task` (
-  `id`      BIGINT AUTO_INCREMENT,
-  `name`    VARCHAR(50),
-  `detail`  VARCHAR(1000),
-  `task_id` BIGINT,
+#
+CREATE TABLE `tomato` (
+  `id`         BIGINT AUTO_INCREMENT,
+  `start_time` TIMESTAMP,
+  `end_time`   TIMESTAMP,
+  `task_id`    BIGINT,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`task_id`) REFERENCES `Task` (`id`)
-)
+  FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
+);
+
+# # subTask
+# CREATE TABLE `Sub_Task` (
+#   `id`      BIGINT AUTO_INCREMENT,
+#   `name`    VARCHAR(50),
+#   `detail`  VARCHAR(1000),
+#   `task_id` BIGINT,
+#   PRIMARY KEY (`id`),
+#   FOREIGN KEY (`task_id`) REFERENCES `Task` (`id`)
+# )
