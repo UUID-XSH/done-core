@@ -8,6 +8,7 @@ buildscript {
         jcenter()
         maven { url "http://repo.spring.io/snapshot" }
         maven { url "http://repo.spring.io/milestone" }
+
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.BUILD-SNAPSHOT")
@@ -33,6 +34,7 @@ repositories {
     jcenter()
     maven { url "http://repo.spring.io/snapshot" }
     maven { url "http://repo.spring.io/milestone" }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -44,4 +46,6 @@ dependencies {
     compile "org.flywaydb:flyway-core:4.0.3"
     compile('org.hsqldb:hsqldb')
     runtime('mysql:mysql-connector-java')
+
+    compile 'com.github.yannxia:chameleon:-SNAPSHOT'
 }
