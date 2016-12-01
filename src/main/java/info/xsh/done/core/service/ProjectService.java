@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -21,12 +22,19 @@ public class ProjectService {
     public Project save(Project project) {
         log.info(String.format("save entity: %s", project.toString()));
 
+
         return projectRepository.save(project);
     }
+
 
     public Iterable<Project> findAll() {
         return projectRepository.findAll();
     }
+
+    public List<Project> findByUserId(long userId) {
+        return projectRepository.findByUserIdAndIsAchievedAndIsArchived(userId, Project.YesOrNo.NO, Project.YesOrNo.NO);
+    }
+
 
     public Optional<Project> findById(String id) {
         return Optional.ofNullable(projectRepository.findOne(Long.valueOf(id)));
