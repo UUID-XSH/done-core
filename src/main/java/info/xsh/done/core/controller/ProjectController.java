@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,11 +42,10 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{user_id}/projects", method = RequestMethod.POST)
-    public Project add(@PathVariable("user_id") String userId, @RequestBody ProjectVo projectVo) {
+    public ProjectVo add(@PathVariable("user_id") String userId, @RequestBody ProjectVo projectVo) {
         projectVo.setUserId(Long.valueOf(userId));
         Project project = projectDoVoConverter.reverse().convert(projectVo);
-        return projectService.save(project);
-
+        return projectDoVoConverter.convert(projectService.save(project));
     }
 
     /**
@@ -57,8 +57,9 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{user_id}/projects", method = RequestMethod.GET)
-    public Iterable<Project> getAll(@PathVariable("user_id") String userId) {
-        return projectService.findByUserId(Long.valueOf(userId));
+    public List<ProjectVo> getAll(@PathVariable("user_id") String userId) {
+        List<Project> projects = projectService.findByUserId(Long.valueOf(userId));
+        return projects.stream().map(project -> projectDoVoConverter.convert(project)).collect(Collectors.toList());
     }
 
     /**
@@ -88,13 +89,13 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{user_id}/projects/{id}", method = RequestMethod.DELETE)
-    public Project delete(@PathVariable("user_id") String userId, @PathVariable String id) {
+    public ProjectVo delete(@PathVariable("user_id") String userId, @PathVariable String id) {
         Project project = projectService.findById(id).orElseThrow(() -> new RuntimeException("项目不存在"));
         if (project.getUserId() != Long.valueOf(userId)) {
             throw new IllegalArgumentException("项目不属于该用户");
         }
         project.setIsArchived(Project.YesOrNo.YES);
-        return projectService.save(project);
+        return projectDoVoConverter.convert(projectService.save(project));
     }
 
     /**
@@ -105,13 +106,13 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{user_id}/projects/{id}", method = RequestMethod.PUT)
-    public Project restore(@PathVariable("user_id") String userId, @PathVariable String id) {
+    public ProjectVo restore(@PathVariable("user_id") String userId, @PathVariable String id) {
         Project project = projectService.findById(id).orElseThrow(() -> new RuntimeException("项目不存在"));
         if (project.getUserId() != Long.valueOf(userId)) {
             throw new IllegalArgumentException("项目不属于该用户");
         }
         project.setIsArchived(Project.YesOrNo.NO);
-        return projectService.save(project);
+        return projectDoVoConverter.convert(projectService.save(project));
     }
 
 }
