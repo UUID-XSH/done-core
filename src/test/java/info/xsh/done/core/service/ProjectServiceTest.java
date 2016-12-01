@@ -14,13 +14,16 @@ import info.xsh.done.core.domain.Project;
  * Created by xiaohuo on 16/11/30.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = DoneApplication.class)
+@SpringBootTest(classes = DoneApplication.class, properties = "application-test.properties")
 public class ProjectServiceTest {
 
 	private Project project;
 
 	@Autowired
 	private ProjectService projectService;
+
+	@Autowired
+	private UserService userService;
 
 	@Before
 	public void setup() {
