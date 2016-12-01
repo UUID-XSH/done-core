@@ -2,10 +2,7 @@ package info.xsh.done.core.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by xiaohuo on 16/11/28.
@@ -14,14 +11,21 @@ import javax.persistence.Table;
 @Table(name = "task")
 @Data
 public class Task {
-	@Id
-	@Column(name = "id")
-	private long id;
-	@Column(name = "name")
-	private String name; // 任务名称
-	@Column(name = "detail")
-	private String detail; // 详情
-	@Column(name = "project_id")
-	private long projectId;
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private long id;
+    @Column(name = "name")
+    private String name; // 任务名称
+    @Column(name = "detail")
+    private String detail; // 详情
+    @Column(name = "is_achieved")
+    @Enumerated(EnumType.STRING)
+    private Project.YesOrNo isAchieved = Project.YesOrNo.NO; //是否完成
+    @Enumerated(EnumType.STRING)
+    @Column(name = "is_final")
+    private Project.YesOrNo isFinal = Project.YesOrNo.NO;    //是否是最小执行单位
+    @Column(name = "project_id")
+    private long projectId;
 
 }

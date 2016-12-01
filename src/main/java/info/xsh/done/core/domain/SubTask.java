@@ -2,10 +2,7 @@ package info.xsh.done.core.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by xiaohuo on 16/11/28.
@@ -21,6 +18,9 @@ public class SubTask {
     private String name; // 任务名称
     @Column(name = "detail")
     private String detail; // 详情
+    @Column(name = "is_achieved")
+    @Enumerated(EnumType.STRING)
+    private Project.YesOrNo isAchieved = Project.YesOrNo.NO; //是否完成
     @Column(name = "task_id")
     private long taskId;
 

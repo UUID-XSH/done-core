@@ -1,5 +1,9 @@
 package info.xsh.done.core.controller;
 
+import info.xsh.done.core.common.coverter.TaskDoVoConverter;
+import info.xsh.done.core.controller.vo.TaskVo;
+import info.xsh.done.core.domain.Task;
+import info.xsh.done.core.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +13,10 @@ import info.xsh.done.core.domain.Project;
 import info.xsh.done.core.service.ProjectService;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by xiaohuo on 16/11/28.
@@ -22,8 +29,13 @@ public class ProjectController extends BaseController {
 
 	private ProjectDoVoConverter projectDoVoConverter = new ProjectDoVoConverter();
 
+	private TaskDoVoConverter taskDoVoConverter = new TaskDoVoConverter();
+
 	@Autowired
 	private ProjectService projectService;
+
+	@Autowired
+	private TaskService taskService;
 
 	/**
 	 * 添加项目
@@ -37,26 +49,27 @@ public class ProjectController extends BaseController {
 
 	/**
 	 * 获取所有项目
+	 * 不带Task详情
 	 */
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public Iterable<Project> getAll() {
 		return projectService.findAll();
 	}
 
-
 	/**
 	 * 获取单个项目
-	 * 
+	 * 带Task详情
 	 * @param id
 	 */
 	@RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
 	public ProjectVo get(@PathVariable String id) {
-		Optional<Project> project = projectService.findById(id);
-		if (project.isPresent()) {
-			return projectDoVoConverter.convert(project.get());
-		} else {
-			throw new RuntimeException("项目不存在");
-		}
+		Project project = projectService.findById(id).orElseThrow(() -> new IllegalArgumentException("项目不存在"));
+		ProjectVo projectVo = projectDoVoConverter.convert(project);
+		List<Task> tasks = taskService.getByPid(project.getId());
+		List<TaskVo> taskVos = tasks.stream().map(task -> taskDoVoConverter.convert(task)).collect(Collectors.toList());
+		projectVo.setTaskVos(taskVos);
+		return projectVo;
+
 	}
 
 	/**
