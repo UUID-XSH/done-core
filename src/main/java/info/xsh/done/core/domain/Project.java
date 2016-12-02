@@ -1,11 +1,8 @@
 package info.xsh.done.core.domain;
 
 import lombok.Data;
-import org.springframework.data.annotation.Persistent;
-import sun.jvm.hotspot.oops.Instance;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 /**
@@ -26,6 +23,7 @@ public class Project {
 	@Enumerated(EnumType.STRING)
 	private YesOrNo isAchieved = YesOrNo.NO; // 是否完成
 	@Column(name = "archived")
+	@Enumerated(EnumType.STRING)
 	private YesOrNo isArchived = YesOrNo.NO; // 是否归档
 	@Column(name = "user_id")
 	private long userId;

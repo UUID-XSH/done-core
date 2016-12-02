@@ -18,6 +18,10 @@ public class UserDoVoConverter extends Converter<UserVo, User> {
         user.setPassWord(userVo.getPassWord());
         user.setName(userVo.getName());
         user.setId(userVo.getId());
+        user.setEmail(userVo.getEmail());
+        user.setNickName(userVo.getNickName());
+        user.setRegisterDate(userVo.getRegisterDate());
+        user.setRecentLoginTime(userVo.getRecentLoginTime());
         return user;
     }
 
@@ -28,6 +32,10 @@ public class UserDoVoConverter extends Converter<UserVo, User> {
         userVo.setId(user.getId());
         userVo.setName(user.getName());
         userVo.setPassWord(user.getPassWord());
+        userVo.setEmail(user.getEmail());
+        userVo.setNickName(user.getNickName());
+        userVo.setRecentLoginTime(user.getRecentLoginTime());
+        userVo.setRegisterDate(user.getRegisterDate());
         return userVo;
     }
 

@@ -3,6 +3,10 @@ CREATE TABLE `User` (
   `id`   BIGINT AUTO_INCREMENT,
   `name` VARCHAR(50),
   `pass_word` VARCHAR(50),
+  `nick_name` VARCHAR(100),
+  `email` VARCHAR(200),
+  `register_date` TIMESTAMP,
+  `recent_login_time` TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 

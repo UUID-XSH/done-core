@@ -22,7 +22,7 @@ public class TaskController extends BaseController {
     @Autowired
     private TaskService taskService;
 
-    /**
+    /**想法盒子 单纯记录tasks
      * @param taskVo
      * @return
      */
@@ -35,5 +35,9 @@ public class TaskController extends BaseController {
         responseVo.setRes(convertFactory().convert(taskVo.getClass(),task));
         return responseVo;
 	}
+
+
+
+
 
 }
