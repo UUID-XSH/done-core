@@ -1,7 +1,5 @@
 package info.xsh.done.core.controller;
 
-import info.xsh.done.core.common.coverter.ProjectDoVoConverter;
-import info.xsh.done.core.common.coverter.TaskDoVoConverter;
 import info.xsh.done.core.controller.vo.ProjectVo;
 import info.xsh.done.core.controller.vo.ResponseVo;
 import info.xsh.done.core.controller.vo.TaskVo;
@@ -24,10 +22,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProjectController extends BaseController {
 
-    private ProjectDoVoConverter projectDoVoConverter = new ProjectDoVoConverter();
-
-    private TaskDoVoConverter taskDoVoConverter = new TaskDoVoConverter();
-
     @Autowired
     private ProjectService projectService;
 
@@ -45,9 +39,9 @@ public class ProjectController extends BaseController {
     public ResponseVo add(@PathVariable("user_id") String userId, @RequestBody ProjectVo projectVo) {
         ResponseVo responseVo =new ResponseVo();
         projectVo.setUserId(Long.valueOf(userId));
-        Project project = projectDoVoConverter.reverse().convert(projectVo);
+        Project project = convertFactory().convert(Project.class,projectVo);
         responseVo.setCode(200);
-        responseVo.setRes(projectDoVoConverter.convert(projectService.save(project)));
+        responseVo.setRes(convertFactory().convert(ResponseVo.class,projectService.save(project)));
         return responseVo;
     }
 
@@ -64,7 +58,7 @@ public class ProjectController extends BaseController {
         ResponseVo responseVo =new ResponseVo();
         List<Project> projects = projectService.findByUserId(Long.valueOf(userId));
         responseVo.setCode(200);
-        responseVo.setRes(projects.stream().map(project -> projectDoVoConverter.convert(project)).collect(Collectors.toList()));
+        responseVo.setRes(projects.stream().map(project -> convertFactory().convert(ProjectVo.class,project)).collect(Collectors.toList()));
         return responseVo;
     }
 
@@ -81,9 +75,9 @@ public class ProjectController extends BaseController {
         if (project.getUserId() != Long.valueOf(userId)) {
             throw new IllegalArgumentException("项目不属于该用户");
         }
-        ProjectVo projectVo = projectDoVoConverter.convert(project);
+        ProjectVo projectVo = convertFactory().convert(ProjectVo.class,project);
         List<Task> tasks = taskService.getByPid(project.getId());
-        List<TaskVo> taskVos = tasks.stream().map(task -> taskDoVoConverter.convert(task)).collect(Collectors.toList());
+        List<TaskVo> taskVos = tasks.stream().map(task -> convertFactory().convert(TaskVo.class,task)).collect(Collectors.toList());
         projectVo.setTaskVos(taskVos);
         responseVo.setCode(200);
         responseVo.setRes(projectVo);
@@ -106,7 +100,7 @@ public class ProjectController extends BaseController {
         }
         project.setIsArchived(Project.YesOrNo.YES);
         responseVo.setCode(200);
-        responseVo.setRes(projectDoVoConverter.convert(projectService.save(project)));
+        responseVo.setRes(convertFactory().convert(ProjectVo.class,projectService.save(project)));
         return responseVo;
     }
 
@@ -126,7 +120,7 @@ public class ProjectController extends BaseController {
         }
         project.setIsArchived(Project.YesOrNo.NO);
         responseVo.setCode(200);
-        responseVo.setRes(projectDoVoConverter.convert(projectService.save(project)));
+        responseVo.setRes(convertFactory().convert(ProjectVo.class,projectService.save(project)));
         return responseVo;
     }
 

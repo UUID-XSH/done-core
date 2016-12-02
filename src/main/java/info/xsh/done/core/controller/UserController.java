@@ -1,6 +1,5 @@
 package info.xsh.done.core.controller;
 
-import info.xsh.done.core.common.coverter.UserDoVoConverter;
 import info.xsh.done.core.controller.vo.ResponseVo;
 import info.xsh.done.core.controller.vo.UserVo;
 import info.xsh.done.core.domain.User;
@@ -24,8 +23,6 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
-
-    private UserDoVoConverter userDoVoConverter = new UserDoVoConverter();
 
     /**
      * @param userVo

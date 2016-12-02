@@ -3,6 +3,7 @@ package info.xsh.done.core.common.coverter;
 import com.google.common.base.Converter;
 import info.xsh.done.core.controller.vo.TaskVo;
 import info.xsh.done.core.domain.Task;
+import info.yannxia.java.chameleon.annonation.Convertor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class TaskDoVoConverter extends Converter<Task, TaskVo> {
 
     @Override
+    @Convertor
     protected TaskVo doForward(Task task) {
         TaskVo taskVo = new TaskVo();
         taskVo.setId(task.getId());
@@ -23,6 +25,7 @@ public class TaskDoVoConverter extends Converter<Task, TaskVo> {
     }
 
     @Override
+    @Convertor
     protected Task doBackward(TaskVo taskVo) {
         Task task = new Task();
         task.setName(taskVo.getName());

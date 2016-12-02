@@ -3,6 +3,7 @@ package info.xsh.done.core.common.coverter;
 import com.google.common.base.Converter;
 import info.xsh.done.core.controller.vo.ProjectVo;
 import info.xsh.done.core.domain.Project;
+import info.yannxia.java.chameleon.annonation.Convertor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class ProjectDoVoConverter extends Converter<Project, ProjectVo> {
 
 	@Override
+	@Convertor
 	protected ProjectVo doForward(Project project) {
 		ProjectVo projectVo = new ProjectVo();
 		projectVo.setId(project.getId());
@@ -24,6 +26,7 @@ public class ProjectDoVoConverter extends Converter<Project, ProjectVo> {
 	}
 
 	@Override
+	@Convertor
 	protected Project doBackward(ProjectVo projectVo) {
 		Project project = new Project();
 		project.setName(projectVo.getName());
