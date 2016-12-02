@@ -14,7 +14,7 @@ public class ProjectDoVoConverter extends Converter<Project, ProjectVo> {
 
 	@Override
 	@Convertor
-	protected ProjectVo doForward(Project project) {
+	public ProjectVo doForward(Project project) {
 		ProjectVo projectVo = new ProjectVo();
 		projectVo.setId(project.getId());
 		projectVo.setName(project.getName());
@@ -27,7 +27,7 @@ public class ProjectDoVoConverter extends Converter<Project, ProjectVo> {
 
 	@Override
 	@Convertor
-	protected Project doBackward(ProjectVo projectVo) {
+	public Project doBackward(ProjectVo projectVo) {
 		Project project = new Project();
 		project.setName(projectVo.getName());
 		project.setUserId(projectVo.getUserId());

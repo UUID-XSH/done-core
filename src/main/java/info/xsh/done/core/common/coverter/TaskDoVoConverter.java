@@ -14,7 +14,7 @@ public class TaskDoVoConverter extends Converter<Task, TaskVo> {
 
     @Override
     @Convertor
-    protected TaskVo doForward(Task task) {
+    public TaskVo doForward(Task task) {
         TaskVo taskVo = new TaskVo();
         taskVo.setId(task.getId());
         taskVo.setName(task.getName());
@@ -26,7 +26,7 @@ public class TaskDoVoConverter extends Converter<Task, TaskVo> {
 
     @Override
     @Convertor
-    protected Task doBackward(TaskVo taskVo) {
+    public Task doBackward(TaskVo taskVo) {
         Task task = new Task();
         task.setName(taskVo.getName());
         task.setDetail(taskVo.getDetail());
