@@ -17,11 +17,8 @@ public class UserDoVoConverter extends Converter<UserVo, User> {
         User user = new User();
         user.setPassWord(userVo.getPassWord());
         user.setName(userVo.getName());
-        user.setId(userVo.getId());
         user.setEmail(userVo.getEmail());
         user.setNickName(userVo.getNickName());
-        user.setRegisterDate(userVo.getRegisterDate());
-        user.setRecentLoginTime(userVo.getRecentLoginTime());
         return user;
     }
 

@@ -1,7 +1,9 @@
 package info.xsh.done.core.common.coverter;
 
 import com.google.common.base.Converter;
+import info.xsh.done.core.controller.vo.SingleTaskVo;
 import info.xsh.done.core.controller.vo.TaskVo;
+import info.xsh.done.core.domain.SingleTask;
 import info.xsh.done.core.domain.Task;
 import info.yannxia.java.chameleon.annonation.Convertor;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,8 @@ public class TaskDoVoConverter extends Converter<Task, TaskVo> {
         taskVo.setName(task.getName());
         taskVo.setDetail(task.getDetail());
         taskVo.setProjectId(task.getProjectId());
+        taskVo.setIsAchieved(task.getIsAchieved());
+        taskVo.setIsFinal(task.getIsFinal());
         return taskVo;
 
     }
@@ -30,7 +34,27 @@ public class TaskDoVoConverter extends Converter<Task, TaskVo> {
         Task task = new Task();
         task.setName(taskVo.getName());
         task.setDetail(taskVo.getDetail());
-        task.setProjectId(taskVo.getProjectId()); // TODO 为游离Task设置一个特殊的projectId
+        task.setProjectId(taskVo.getProjectId());
         return task;
+    }
+
+    @Convertor
+    public SingleTaskVo  SingleTaskDoForward(SingleTask singleTask){
+        SingleTaskVo singleTaskVo =new SingleTaskVo();
+        singleTaskVo.setId(singleTask.getId());
+        singleTaskVo.setName(singleTask.getName());
+        singleTaskVo.setDetail(singleTask.getDetail());
+        singleTaskVo.setUserId(singleTask.getUserId());
+        singleTaskVo.setIsAchieved(singleTask.getIsAchieved());
+        singleTaskVo.setIsFinal(singleTask.getIsFinal());
+        return singleTaskVo;
+    }
+
+    @Convertor
+    public SingleTask SingleTaskDoBackward(SingleTaskVo singleTaskVo){
+        SingleTask singleTask =new SingleTask();
+        singleTask.setName(singleTaskVo.getName());
+        singleTask.setDetail(singleTaskVo.getDetail());
+        return singleTask;
     }
 }

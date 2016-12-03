@@ -1,7 +1,7 @@
 # user
 CREATE TABLE `User` (
   `id`   BIGINT AUTO_INCREMENT,
-  `name` VARCHAR(50),
+  `name` VARCHAR(50) UNIQUE ,
   `pass_word` VARCHAR(50),
   `nick_name` VARCHAR(100),
   `email` VARCHAR(200),
@@ -30,6 +30,18 @@ CREATE TABLE `Task` (
   `project_id` BIGINT,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`project_id`) REFERENCES `Project` (`id`)
+);
+
+# single task
+CREATE TABLE `Single_task` (
+  `id`         BIGINT AUTO_INCREMENT,
+  `name`       VARCHAR(50),
+  `detail`     VARCHAR(1000),
+  `user_id` BIGINT,
+  `is_achieved` VARCHAR(50),
+  `is_final` VARCHAR(50),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
 );
 
 #

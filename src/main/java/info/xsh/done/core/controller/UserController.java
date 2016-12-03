@@ -1,18 +1,14 @@
 package info.xsh.done.core.controller;
 
-import info.xsh.done.core.controller.vo.ResponseVo;
 import info.xsh.done.core.controller.vo.UserVo;
-import info.xsh.done.core.domain.Project;
 import info.xsh.done.core.domain.User;
 import info.xsh.done.core.service.ProjectService;
 import info.xsh.done.core.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -33,66 +29,36 @@ public class UserController extends BaseController {
      * @param userVo
      * @return
      */
+
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "users", method = RequestMethod.POST)
-    public ResponseVo create(@RequestBody UserVo userVo) {
-        ResponseVo responseVo =new ResponseVo();
+    public UserVo create(@RequestBody UserVo userVo) {
         User user = convertFactory().convert(User.class, userVo);
-        Project project =new Project();
-        try {
-            user=userService.save(user);
-            project.setUserId(user.getId());
-            project.setName("user"+user.getId()+"DefaultProject");
-            projectService.save(project);
-        }catch (Exception e){
-            log.error(e.getMessage(),e);
-            throw new RuntimeException("创建用户失败！");
-        }
-        responseVo.setCode(200);
-        responseVo.setRes(convertFactory().convert(UserVo.class,user));
-        return responseVo;
+        user = userService.save(user);
+        return convertFactory().convert(UserVo.class, user);
     }
 
-    /**查询所有用户
+    /**
+     * 按照ID查询用户
+     *
+     * @param userId
      * @return
      */
-    @RequestMapping(value = "users", method = RequestMethod.GET)
-    public ResponseVo get() {
-        ResponseVo responseVo =new ResponseVo();
-        List<UserVo> userVos = new ArrayList<>();
-        Iterable<User> users = userService.findAll();
-        for (User user : users) {
-            userVos.add(convertFactory().convert(UserVo.class,user));
-        }
-        responseVo.setCode(200);
-        responseVo.setRes(userVos);
-        return responseVo;
-    }
-
-    /**按照ID查询用户
-     * @param user_id
-     * @return
-     */
-    @RequestMapping(value = "users/{user_id}", method = RequestMethod.GET)
-    public ResponseVo getById(@PathVariable String user_id) {
-        ResponseVo responseVo =new ResponseVo();
-        User user = userService.findById(user_id).orElseThrow(() -> new IllegalArgumentException("用户不存在"));
-        responseVo.setCode(200);
-        responseVo.setRes(convertFactory().convert(UserVo.class,user));
-        return responseVo;
+    @RequestMapping(value = "users/{userId}", method = RequestMethod.GET)
+    public UserVo getById(@PathVariable String userId) {
+        User user = userService.findById(userId).orElseThrow(() -> new IllegalArgumentException("用户不存在"));
+        return convertFactory().convert(UserVo.class, user);
     }
 
     /**
      * 按照用户名查询
-     * @param user_name
+     *
+     * @param userName
      * @return
      */
-    @RequestMapping(value = "users/name/{user_name}", method = RequestMethod.GET)
-    public ResponseVo getByName(@PathVariable String user_name) {
-        ResponseVo responseVo =new ResponseVo();
-        User user = userService.findByName(user_name).orElseThrow(() -> new IllegalArgumentException("用户不存在"));
-        responseVo.setCode(200);
-        responseVo.setRes(convertFactory().convert(UserVo.class,user));
-        return responseVo;
+    @RequestMapping(value = "users/name/{userName}", method = RequestMethod.GET)
+    public UserVo getByName(@PathVariable String userName) {
+        return convertFactory().convert(UserVo.class, userService.findByName(userName).orElseThrow(() -> new IllegalArgumentException("用户不存在")));
     }
 
     /**
@@ -103,31 +69,26 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{user_id}", method = RequestMethod.PUT)
-    public ResponseVo update(@PathVariable String user_id, @RequestBody UserVo userVo) {
-        ResponseVo responseVo =new ResponseVo();
+    public UserVo update(@PathVariable String user_id, @RequestBody UserVo userVo) {
         User user = userService.findById(user_id).orElseThrow(() -> new IllegalArgumentException("用户不存在"));
         BeanUtils.copyProperties(userVo, user, new String[]{"id"});
-        responseVo.setCode(200);
-        responseVo.setRes(convertFactory().convert(UserVo.class,userService.save(user)));
-        return responseVo;
+        return convertFactory().convert(UserVo.class, userService.save(user));
     }
 
     /**
      * 删除
+     *
      * @param user_id
      * @return
      */
     @RequestMapping(value = "users/{user_id}", method = RequestMethod.DELETE)
-    public ResponseVo delete(@PathVariable String user_id) {
-        ResponseVo responseVo =new ResponseVo();
+    public String delete(@PathVariable String user_id) {
         try {
             userService.delete(user_id);
-        }catch (Exception e){
-            log.error(e.getMessage(),e);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
             throw new RuntimeException("删除用户失败！");
         }
-        responseVo.setCode(200);
-        responseVo.setRes("用户ID："+user_id+"，删除成功！");
-        return responseVo;
+        return "用户ID：" + user_id + "，删除成功！";
     }
 }

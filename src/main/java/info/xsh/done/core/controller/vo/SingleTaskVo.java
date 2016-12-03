@@ -4,14 +4,14 @@ import info.xsh.done.core.domain.Project;
 import lombok.Data;
 
 /**
- * Created by xiaohuo on 16/11/30.
+ * Created by yangxueying on 2016/12/3.
  */
 @Data
-public class TaskVo {
+public class SingleTaskVo {
     private long id;
     private String name; // 任务名称
     private String detail; // 详情
-    private long projectId; //项目id
+    private long userId; //用户id
     private Project.YesOrNo isAchieved;
     private Project.YesOrNo isFinal;
 }

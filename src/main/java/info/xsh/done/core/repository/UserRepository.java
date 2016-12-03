@@ -1,7 +1,6 @@
 package info.xsh.done.core.repository;
 
 import info.xsh.done.core.domain.User;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends CrudRepository<User,Long> {
 
-    @Query
-    public User findByName(String name);
+    User findByName(String name);
 }

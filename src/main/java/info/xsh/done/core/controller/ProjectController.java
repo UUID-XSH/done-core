@@ -1,7 +1,6 @@
 package info.xsh.done.core.controller;
 
 import info.xsh.done.core.controller.vo.ProjectVo;
-import info.xsh.done.core.controller.vo.ResponseVo;
 import info.xsh.done.core.controller.vo.TaskVo;
 import info.xsh.done.core.domain.Project;
 import info.xsh.done.core.domain.Task;
@@ -9,6 +8,7 @@ import info.xsh.done.core.service.ProjectService;
 import info.xsh.done.core.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,14 +35,12 @@ public class ProjectController extends BaseController {
      * @param projectVo{"name" = "project name"}
      * @return
      */
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "users/{user_id}/projects", method = RequestMethod.POST)
-    public ResponseVo add(@PathVariable("user_id") String userId, @RequestBody ProjectVo projectVo) {
-        ResponseVo responseVo =new ResponseVo();
+    public ProjectVo add(@PathVariable("user_id") String userId, @RequestBody ProjectVo projectVo) {
         projectVo.setUserId(Long.valueOf(userId));
         Project project = convertFactory().convert(Project.class,projectVo);
-        responseVo.setCode(200);
-        responseVo.setRes(convertFactory().convert(ResponseVo.class,projectService.save(project)));
-        return responseVo;
+        return convertFactory().convert(ProjectVo.class,projectService.save(project));
     }
 
     /**
@@ -54,12 +52,9 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{user_id}/projects", method = RequestMethod.GET)
-    public ResponseVo getAll(@PathVariable("user_id") String userId) {
-        ResponseVo responseVo =new ResponseVo();
+    public List<ProjectVo> getAll(@PathVariable("user_id") String userId) {
         List<Project> projects = projectService.findByUserId(Long.valueOf(userId));
-        responseVo.setCode(200);
-        responseVo.setRes(projects.stream().map(project -> convertFactory().convert(ProjectVo.class,project)).collect(Collectors.toList()));
-        return responseVo;
+        return projects.stream().map(project -> convertFactory().convert(ProjectVo.class,project)).collect(Collectors.toList());
     }
 
     /**
@@ -69,8 +64,7 @@ public class ProjectController extends BaseController {
      * @param id
      */
     @RequestMapping(value = "users/{user_id}/projects/{id}", method = RequestMethod.GET)
-    public ResponseVo get(@PathVariable("user_id") String userId, @PathVariable String id) {
-        ResponseVo responseVo =new ResponseVo();
+    public ProjectVo get(@PathVariable("user_id") String userId, @PathVariable String id) {
         Project project = projectService.findById(id).orElseThrow(() -> new IllegalArgumentException("项目不存在"));
         if (project.getUserId() != Long.valueOf(userId)) {
             throw new IllegalArgumentException("项目不属于该用户");
@@ -79,9 +73,7 @@ public class ProjectController extends BaseController {
         List<Task> tasks = taskService.getByPid(project.getId());
         List<TaskVo> taskVos = tasks.stream().map(task -> convertFactory().convert(TaskVo.class,task)).collect(Collectors.toList());
         projectVo.setTaskVos(taskVos);
-        responseVo.setCode(200);
-        responseVo.setRes(projectVo);
-        return responseVo;
+        return projectVo;
     }
 
     /**
@@ -92,16 +84,13 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{user_id}/projects/{id}", method = RequestMethod.DELETE)
-    public ResponseVo delete(@PathVariable("user_id") String userId, @PathVariable String id) {
-        ResponseVo responseVo =new ResponseVo();
+    public ProjectVo delete(@PathVariable("user_id") String userId, @PathVariable String id) {
         Project project = projectService.findById(id).orElseThrow(() -> new RuntimeException("项目不存在"));
         if (project.getUserId() != Long.valueOf(userId)) {
             throw new IllegalArgumentException("项目不属于该用户");
         }
         project.setIsArchived(Project.YesOrNo.YES);
-        responseVo.setCode(200);
-        responseVo.setRes(convertFactory().convert(ProjectVo.class,projectService.save(project)));
-        return responseVo;
+        return convertFactory().convert(ProjectVo.class,projectService.save(project));
     }
 
     /**
@@ -112,16 +101,13 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{user_id}/projects/{id}", method = RequestMethod.PUT)
-    public ResponseVo restore(@PathVariable("user_id") String userId, @PathVariable String id) {
-        ResponseVo responseVo =new ResponseVo();
+    public ProjectVo restore(@PathVariable("user_id") String userId, @PathVariable String id) {
         Project project = projectService.findById(id).orElseThrow(() -> new RuntimeException("项目不存在"));
         if (project.getUserId() != Long.valueOf(userId)) {
             throw new IllegalArgumentException("项目不属于该用户");
         }
         project.setIsArchived(Project.YesOrNo.NO);
-        responseVo.setCode(200);
-        responseVo.setRes(convertFactory().convert(ProjectVo.class,projectService.save(project)));
-        return responseVo;
+        return convertFactory().convert(ProjectVo.class,projectService.save(project));
     }
 
 }

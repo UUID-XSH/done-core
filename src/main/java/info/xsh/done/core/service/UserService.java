@@ -23,10 +23,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Iterable<User> findAll() {
-        return userRepository.findAll();
-    }
-
     public Optional<User> findById(String id) {
         return Optional.ofNullable(userRepository.findOne(Long.valueOf(id)));
     }
