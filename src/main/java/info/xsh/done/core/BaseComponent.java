@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * Created by yann on 2016/12/1.
  */
-public abstract class BaseComponent {
+public abstract class BaseComponent implements ConvertFactory {
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -16,4 +16,7 @@ public abstract class BaseComponent {
         return applicationContext.getBean(ConvertFactory.class);
     }
 
+    public <T> T convert(Class<T> expectClass, Object... params) {
+        return this.convertFactory().convert(expectClass, params);
+    }
 }
