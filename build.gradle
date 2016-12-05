@@ -34,7 +34,6 @@ repositories {
 }
 
 dependencies {
-//    compile group: 'com.google.guava', name: 'guava', version: '19.0'
     compile("org.springframework.boot:spring-boot-starter-web")
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.projectlombok:lombok:1.16.10')
@@ -46,6 +45,6 @@ dependencies {
 
     testCompile group: 'org.easymock', name: 'easymock', version: '3.4'
     testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.4'
+    testCompile  group: 'com.h2database', name: 'h2', version: '1.4.193'
 
 }
