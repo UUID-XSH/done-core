@@ -2,6 +2,7 @@ package info.xsh.done.core.config;
 
 import info.xsh.done.core.exception.DoneProjectException;
 import info.xsh.done.core.exception.ErrorInfo;
+import info.xsh.done.core.exception.ExceptionCode;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -41,6 +42,6 @@ public class GlobalControllerExceptionHandler {
             return new ErrorInfo(doneProjectException.getErrorCode(), doneProjectException.getErrorMsg());
         }
 
-        return new ErrorInfo("99999", e.getMessage());
+        return new ErrorInfo(ExceptionCode.UN_KNOW.getErrorCode(), e.getMessage());
     }
 }

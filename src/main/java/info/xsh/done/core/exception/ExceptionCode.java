@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum ExceptionCode {
+    UN_KNOW("9999", "unknow exception", HttpStatus.BAD_REQUEST),
     NOT_FOUND("00007", "not found", HttpStatus.BAD_REQUEST);
 
     private String errorCode;
