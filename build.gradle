@@ -29,7 +29,7 @@ springBoot {
 }
 
 repositories {
-    jcenter()
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     maven { url 'https://jitpack.io' }
 }
 
@@ -45,6 +45,6 @@ dependencies {
 
     testCompile group: 'org.easymock', name: 'easymock', version: '3.4'
     testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile  group: 'com.h2database', name: 'h2', version: '1.4.193'
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.193'
 
 }
