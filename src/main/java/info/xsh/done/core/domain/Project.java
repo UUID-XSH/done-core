@@ -28,7 +28,4 @@ public class Project {
 	@Column(name = "user_id")
 	private long userId;
 
-	public enum YesOrNo {
-		YES, NO
-	}
 }

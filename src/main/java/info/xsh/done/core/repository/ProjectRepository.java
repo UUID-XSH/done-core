@@ -1,5 +1,6 @@
 package info.xsh.done.core.repository;
 
+import info.xsh.done.core.domain.YesOrNo;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +13,5 @@ import java.util.List;
  */
 @Repository
 public interface ProjectRepository extends PagingAndSortingRepository<Project, Long> {
-    List<Project> findByUserIdAndIsAchievedAndIsArchived(long userId, Project.YesOrNo isAchieved, Project.YesOrNo isArchived);
+    List<Project> findByUserIdAndIsAchievedAndIsArchived(long userId, YesOrNo isAchieved, YesOrNo isArchived);
 }

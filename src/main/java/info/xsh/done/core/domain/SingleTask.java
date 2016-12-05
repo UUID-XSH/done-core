@@ -21,10 +21,10 @@ public class SingleTask {
     private String detail; // 详情
     @Column(name = "is_achieved")
     @Enumerated(EnumType.STRING)
-    private Project.YesOrNo isAchieved = Project.YesOrNo.NO; //是否完成
+    private YesOrNo isAchieved = YesOrNo.NO; //是否完成
     @Enumerated(EnumType.STRING)
     @Column(name = "is_final")
-    private Project.YesOrNo isFinal = Project.YesOrNo.NO;    //是否是最小执行单位
+    private YesOrNo isFinal = YesOrNo.NO;    //是否是最小执行单位
     @Column(name = "user_id")
     private long userId;
 }

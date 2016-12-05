@@ -2,10 +2,7 @@ package info.xsh.done.core.controller;
 
 import info.xsh.done.core.controller.vo.SingleTaskVo;
 import info.xsh.done.core.controller.vo.TaskVo;
-import info.xsh.done.core.domain.Project;
-import info.xsh.done.core.domain.SingleTask;
-import info.xsh.done.core.domain.Task;
-import info.xsh.done.core.domain.User;
+import info.xsh.done.core.domain.*;
 import info.xsh.done.core.exception.DoneProjectException;
 import info.xsh.done.core.exception.ExceptionCode;
 import info.xsh.done.core.service.ProjectService;
@@ -134,7 +131,7 @@ public class TaskController extends BaseController {
         if (singleTask.getUserId() != Long.valueOf(userId)) {
             throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该用户!");
         }
-        singleTask.setIsAchieved(Project.YesOrNo.YES);
+        singleTask.setIsAchieved(YesOrNo.YES);
         return convert(SingleTaskVo.class, taskService.save(singleTask));
     }
 
@@ -151,7 +148,7 @@ public class TaskController extends BaseController {
         if (singleTask.getUserId() != Long.valueOf(userId)) {
             throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该用户!");
         }
-        singleTask.setIsAchieved(Project.YesOrNo.NO);
+        singleTask.setIsAchieved(YesOrNo.NO);
         return convert(SingleTaskVo.class, taskService.save(singleTask));
     }
 
@@ -253,7 +250,7 @@ public class TaskController extends BaseController {
         if (task.getProjectId() != Long.valueOf(projectId)) {
             throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该项目!");
         }
-        task.setIsAchieved(Project.YesOrNo.YES);
+        task.setIsAchieved(YesOrNo.YES);
         return convert(TaskVo.class, taskService.save(task));
     }
 
@@ -270,7 +267,7 @@ public class TaskController extends BaseController {
         if (task.getProjectId() != Long.valueOf(projectId)) {
             throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该项目!");
         }
-        task.setIsAchieved(Project.YesOrNo.NO);
+        task.setIsAchieved(YesOrNo.NO);
         return convert(TaskVo.class, taskService.save(task));
     }
 
@@ -287,7 +284,7 @@ public class TaskController extends BaseController {
         if (task.getProjectId() != Long.valueOf(projectId)) {
             throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该项目!");
         }
-        task.setIsFinal(Project.YesOrNo.YES);
+        task.setIsFinal(YesOrNo.YES);
         return convert(TaskVo.class, taskService.save(task));
     }
 

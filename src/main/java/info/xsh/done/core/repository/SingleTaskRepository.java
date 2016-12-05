@@ -1,7 +1,7 @@
 package info.xsh.done.core.repository;
 
-import info.xsh.done.core.domain.Project;
 import info.xsh.done.core.domain.SingleTask;
+import info.xsh.done.core.domain.YesOrNo;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +13,5 @@ import java.util.List;
 @Repository
 public interface SingleTaskRepository extends CrudRepository<SingleTask, Long> {
     List<SingleTask> findByUserId(long userId);
-    List<SingleTask> findByUserIdAndIsAchieved(long userId,Project.YesOrNo isAchieved);
+    List<SingleTask> findByUserIdAndIsAchieved(long userId,YesOrNo isAchieved);
 }
