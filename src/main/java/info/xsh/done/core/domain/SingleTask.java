@@ -12,9 +12,9 @@ import javax.persistence.*;
 @Data
 public class SingleTask {
     @Id
-    @GeneratedValue
-    @Column(name = "id")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id",nullable = false)
+    private Long id;
     @Column(name = "name")
     private String name; // 任务名称
     @Column(name = "detail")
@@ -25,6 +25,6 @@ public class SingleTask {
     @Enumerated(EnumType.STRING)
     @Column(name = "is_final")
     private Project.YesOrNo isFinal = Project.YesOrNo.NO;    //是否是最小执行单位
-    @Column(name = "user_id")
-    private long userId;
+    @Column(name = "user_id",nullable = false)
+    private Long userId;
 }

@@ -39,9 +39,9 @@ public class ProjectController extends BaseController {
      */
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "users/{userId}/projects", method = RequestMethod.POST)
-    public ProjectVo add(@PathVariable String userId, @RequestBody ProjectVo projectVo) {
-        projectVo.setUserId(Long.valueOf(userId));
-        Project project = convertFactory().convert(Project.class, projectVo);
+    public ProjectVo add(@PathVariable Long userId, @RequestBody ProjectVo projectVo) {
+        projectVo.setUserId(userId);
+        Project project = convert(Project.class, projectVo);
         return convert(ProjectVo.class, projectService.save(project));
     }
 
@@ -54,8 +54,8 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects", method = RequestMethod.GET)
-    public List<ProjectVo> getAll(@PathVariable String userId) {
-        List<Project> projects = projectService.findByUserId(Long.valueOf(userId));
+    public List<ProjectVo> getAll(@PathVariable Long userId) {
+        List<Project> projects = projectService.findByUserId(userId);
         return projects.stream().map(project -> convert(ProjectVo.class, project)).collect(Collectors.toList());
     }
 
@@ -67,11 +67,8 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects/{id}", method = RequestMethod.PUT)
-    public ProjectVo update(@PathVariable String userId, @PathVariable String id, @RequestBody ProjectVo projectVo) {
-        Project project = projectService.findById(id).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
-        if (project.getUserId() != Long.valueOf(userId)) {
-            throw new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不属于该用户！");
-        }
+    public ProjectVo update(@PathVariable Long userId, @PathVariable Long id, @RequestBody ProjectVo projectVo) {
+        Project project = projectService.findByIdAndUserId(id, userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
         project.setName(projectVo.getName());
         return convert(ProjectVo.class, projectService.save(project));
     }
@@ -85,12 +82,9 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects/{id}", method = RequestMethod.GET)
-    public ProjectVo get(@PathVariable String userId, @PathVariable String id) {
-        Project project = projectService.findById(id).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
-        if (project.getUserId() != Long.valueOf(userId)) {
-            throw new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不属于该用户！");
-        }
-        ProjectVo projectVo = convertFactory().convert(ProjectVo.class, project);
+    public ProjectVo get(@PathVariable Long userId, @PathVariable Long id) {
+        Project project = projectService.findByIdAndUserId(id, userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
+        ProjectVo projectVo = convert(ProjectVo.class, project);
         List<Task> tasks = taskService.getByPid(project.getId());
         List<TaskVo> taskVos = tasks.stream().map(task -> convert(TaskVo.class, task)).collect(Collectors.toList());
         projectVo.setTaskVos(taskVos);
@@ -105,11 +99,8 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects/{id}", method = RequestMethod.DELETE)
-    public ProjectVo delete(@PathVariable String userId, @PathVariable String id) {
-        Project project = projectService.findById(id).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
-        if (project.getUserId() != Long.valueOf(userId)) {
-            throw new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不属于该用户！");
-        }
+    public ProjectVo delete(@PathVariable Long userId, @PathVariable Long id) {
+        Project project = projectService.findByIdAndUserId(id, userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
         project.setIsArchived(Project.YesOrNo.YES);
         return convert(ProjectVo.class, projectService.save(project));
     }
@@ -122,11 +113,8 @@ public class ProjectController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects/{id}/restore", method = RequestMethod.PUT)
-    public ProjectVo restore(@PathVariable String userId, @PathVariable String id) {
-        Project project = projectService.findById(id).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
-        if (project.getUserId() != Long.valueOf(userId)) {
-            throw new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不属于该用户！");
-        }
+    public ProjectVo restore(@PathVariable Long userId, @PathVariable Long id) {
+        Project project = projectService.findByIdAndUserId(id, userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
         project.setIsArchived(Project.YesOrNo.NO);
         return convert(ProjectVo.class, projectService.save(project));
     }

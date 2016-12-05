@@ -23,11 +23,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<User> findById(String id) {
-        return Optional.ofNullable(userRepository.findOne(Long.valueOf(id)));
+    public Optional<User> findById(Long id) {
+        return Optional.ofNullable(userRepository.findOne(id));
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         userRepository.delete(Long.valueOf(id));
     }
 

@@ -12,5 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface ProjectRepository extends PagingAndSortingRepository<Project, Long> {
-    List<Project> findByUserIdAndIsAchievedAndIsArchived(long userId, Project.YesOrNo isAchieved, Project.YesOrNo isArchived);
+    List<Project> findByUserIdAndIsAchievedAndIsArchived(Long userId, Project.YesOrNo isAchieved, Project.YesOrNo isArchived);
+
+    Project findByIdAndUserId(Long id, Long userId);
 }

@@ -35,16 +35,16 @@ public class TaskService {
         return singleTaskRepository.save(singleTask);
     }
 
-    public Optional<SingleTask> getSingleTaskById(String taskId){
-        log.info(String.format("Single task to be find: id = %s", taskId));
-        return Optional.ofNullable(singleTaskRepository.findOne(Long.valueOf(taskId)));
+    public Optional<SingleTask> getSingleTaskByUserIdAndTaskId(Long id, Long userId) {
+        log.info(String.format("Single task to be find: taskId = %s", id));
+        return Optional.ofNullable(singleTaskRepository.findByUserIdAndId(userId, id));
     }
 
-    public Iterable<SingleTask> getUserSingleTask(String userId){
+    public Iterable<SingleTask> getUserSingleTask(String userId) {
         return singleTaskRepository.findByUserId(Long.valueOf(userId));
     }
 
-    public Iterable<SingleTask> getUserUnfinishedSingleTask(String userId){
+    public Iterable<SingleTask> getUserUnfinishedSingleTask(String userId) {
         return singleTaskRepository.findByUserIdAndIsAchieved(Long.valueOf(userId), Project.YesOrNo.NO);
     }
 
@@ -62,9 +62,13 @@ public class TaskService {
         return taskRepository.findByProjectId(pid);
     }
 
-    public Optional<Task> getById(String taskId){
+    public Optional<Task> getById(Long taskId) {
         log.info(String.format("Single task to be find: id = %s", taskId));
-        return Optional.ofNullable(taskRepository.findOne(Long.valueOf(taskId)));
+        return Optional.ofNullable(taskRepository.findOne(taskId));
+    }
+
+    public Optional<Task> getByIdAndProjectId(Long taskId,Long projectId) {
+        return Optional.ofNullable(taskRepository.getByIdAndProjectId(taskId,projectId));
     }
 
     public List<Task> getUnfinishedTaskByPid(long pid) {

@@ -8,10 +8,9 @@ import lombok.Data;
  */
 @Data
 public class TaskVo {
-    private long id;
+    private Long id;
     private String name; // 任务名称
     private String detail; // 详情
-    private long projectId; //项目id
+    private Long projectId; //项目id
     private Project.YesOrNo isAchieved;
-    private Project.YesOrNo isFinal;
 }

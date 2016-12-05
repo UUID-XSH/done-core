@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class UserVo {
-    private long id; //用户id
+    private Long id; //用户id
     private String name; //用户名
     private String passWord; //用户密码
     private String nickName;

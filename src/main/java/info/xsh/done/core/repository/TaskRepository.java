@@ -12,6 +12,9 @@ import java.util.List;
  */
 @Repository
 public interface TaskRepository extends CrudRepository<Task, Long> {
-	List<Task> findByProjectId(long projectId);
-	List<Task> findByProjectIdAndIsAchieved(long projectId, Project.YesOrNo isAchieved);
+    List<Task> findByProjectId(Long projectId);
+
+    Task getByIdAndProjectId(Long id, Long projectId);
+
+    List<Task> findByProjectIdAndIsAchieved(Long projectId, Project.YesOrNo isAchieved);
 }

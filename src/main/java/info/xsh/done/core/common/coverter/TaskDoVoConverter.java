@@ -21,7 +21,6 @@ public class TaskDoVoConverter {
         taskVo.setDetail(task.getDetail());
         taskVo.setProjectId(task.getProjectId());
         taskVo.setIsAchieved(task.getIsAchieved());
-        taskVo.setIsFinal(task.getIsFinal());
         return taskVo;
 
     }
@@ -42,7 +41,6 @@ public class TaskDoVoConverter {
         singleTaskVo.setDetail(singleTask.getDetail());
         singleTaskVo.setUserId(singleTask.getUserId());
         singleTaskVo.setIsAchieved(singleTask.getIsAchieved());
-        singleTaskVo.setIsFinal(singleTask.getIsFinal());
         return singleTaskVo;
     }
 

@@ -31,13 +31,17 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public List<Project> findByUserId(long userId) {
+    public List<Project> findByUserId(Long userId) {
         return projectRepository.findByUserIdAndIsAchievedAndIsArchived(userId, Project.YesOrNo.NO, Project.YesOrNo.NO);
     }
 
 
-    public Optional<Project> findById(String id) {
+    public Optional<Project> findById(Long id) {
         return Optional.ofNullable(projectRepository.findOne(Long.valueOf(id)));
+    }
+
+    public Optional<Project> findByIdAndUserId(Long id, Long userId) {
+        return Optional.ofNullable(projectRepository.findByIdAndUserId(id, userId));
     }
 
 

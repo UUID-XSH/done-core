@@ -2,9 +2,7 @@ package info.xsh.done.core.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by xiaohuo on 16/11/30.
@@ -13,7 +11,8 @@ import javax.persistence.Id;
 @Data
 public class Tag {
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private long id;
     @Column(name = "name")
     private String name;

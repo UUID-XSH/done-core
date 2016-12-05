@@ -47,7 +47,7 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{userId}", method = RequestMethod.GET)
-    public UserVo getById(@PathVariable String userId) {
+    public UserVo getById(@PathVariable Long userId) {
         User user = userService.findById(userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "用户不存在!"));
         return convert(UserVo.class, user);
     }
@@ -71,7 +71,7 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{userId}", method = RequestMethod.PUT)
-    public UserVo update(@PathVariable String userId, @RequestBody UserVo userVo) {
+    public UserVo update(@PathVariable Long userId, @RequestBody UserVo userVo) {
         User user = userService.findById(userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "用户不存在!"));
         BeanUtils.copyProperties(userVo, user, new String[]{"id", "registerDate", "recentLoginTime"});
         return convert(UserVo.class, userService.save(user));
@@ -84,13 +84,13 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "users/{userId}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable String userId) {
+    public boolean delete(@PathVariable Long userId) {
         try {
             userService.delete(userId);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             new DoneProjectException(ExceptionCode.UN_KNOW, "删除用户失败!");
         }
-        return "用户ID：" + userId + "，删除成功！";
+        return true;
     }
 }
