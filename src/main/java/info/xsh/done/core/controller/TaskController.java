@@ -48,11 +48,29 @@ public class TaskController extends BaseController {
     @RequestMapping(value = "users/{userId}/tasks", method = RequestMethod.POST)
     public SingleTaskVo saveSingleTask(@RequestBody SingleTaskVo singleTaskVo, @PathVariable String userId) {
         SingleTask singleTask = convertFactory().convert(SingleTask.class, singleTaskVo);
-        User user = userService.findById(userId).orElseThrow(() -> new IllegalArgumentException("用户不存在"));
+        User user = userService.findById(userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在!"));
         singleTask.setUserId(user.getId());
         singleTask = taskService.save(singleTask);
         log.info(String.format("Single task have been save: %s", singleTask.toString()));
         return convert(SingleTaskVo.class, singleTask);
+    }
+
+    /**
+     * 更新singleTask
+     *
+     * @param singleTaskVo
+     * @param userId
+     * @param taskId
+     * @return
+     */
+    @RequestMapping(value = "users/{userId}/single/{taskId}", method = RequestMethod.PUT)
+    public SingleTaskVo update(@RequestBody SingleTaskVo singleTaskVo, @PathVariable String userId, @PathVariable String taskId) {
+        SingleTask singleTask = taskService.getSingleTaskById(taskId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在!"));
+        if (singleTask.getUserId() != Long.valueOf(userId)) {
+            throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该用户!");
+        }
+        BeanUtils.copyProperties(singleTaskVo, singleTask, new String[]{"id", "isAchieved", "isFinal", "userId"});
+        return convert(SingleTaskVo.class, taskService.save(singleTask));
     }
 
     /**
@@ -64,9 +82,9 @@ public class TaskController extends BaseController {
      */
     @RequestMapping(value = "users/{userId}/single/{taskId}", method = RequestMethod.GET)
     public SingleTaskVo getSingleTask(@PathVariable String userId, @PathVariable String taskId) {
-        SingleTask singleTask = taskService.getSingleTaskById(taskId).orElseThrow(() -> new IllegalArgumentException("任务不存在!"));
+        SingleTask singleTask = taskService.getSingleTaskById(taskId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在!"));
         if (singleTask.getUserId() != Long.valueOf(userId)) {
-            throw new IllegalArgumentException("任务不属于该用户!");
+            throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该用户!");
         }
         return convert(SingleTaskVo.class, singleTask);
     }
@@ -112,9 +130,9 @@ public class TaskController extends BaseController {
      */
     @RequestMapping(value = "users/{userId}/single/{taskId}", method = RequestMethod.DELETE)
     public SingleTaskVo deleteSingleTask(@PathVariable String userId, @PathVariable String taskId) {
-        SingleTask singleTask = taskService.getSingleTaskById(taskId).orElseThrow(() -> new IllegalArgumentException("任务不存在!"));
+        SingleTask singleTask = taskService.getSingleTaskById(taskId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在!"));
         if (singleTask.getUserId() != Long.valueOf(userId)) {
-            throw new IllegalArgumentException("任务不属于该用户!");
+            throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该用户!");
         }
         singleTask.setIsAchieved(Project.YesOrNo.YES);
         return convert(SingleTaskVo.class, taskService.save(singleTask));
@@ -127,11 +145,11 @@ public class TaskController extends BaseController {
      * @param taskId
      * @return
      */
-    @RequestMapping(value = "users/{userId}/single/{taskId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "users/{userId}/single/{taskId}/restore", method = RequestMethod.PUT)
     public SingleTaskVo restoreSingleTask(@PathVariable String userId, @PathVariable String taskId) {
-        SingleTask singleTask = taskService.getSingleTaskById(taskId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该项目!"));
+        SingleTask singleTask = taskService.getSingleTaskById(taskId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在!"));
         if (singleTask.getUserId() != Long.valueOf(userId)) {
-            throw new IllegalArgumentException("任务不属于该用户!");
+            throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该用户!");
         }
         singleTask.setIsAchieved(Project.YesOrNo.NO);
         return convert(SingleTaskVo.class, taskService.save(singleTask));
@@ -149,7 +167,7 @@ public class TaskController extends BaseController {
     @RequestMapping(value = "projects/{projectId}/task", method = RequestMethod.POST)
     public TaskVo save(@RequestBody TaskVo taskVo, @PathVariable String projectId) {
         Task task = convertFactory().convert(Task.class, taskVo);
-        Project project = projectService.findById(projectId).orElseThrow(() -> new IllegalArgumentException("项目不存在！"));
+        Project project = projectService.findById(projectId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
         task.setProjectId(project.getId());
         task = taskService.save(task);
         log.info(String.format("Task have been save: %s", task.toString()));
@@ -170,7 +188,7 @@ public class TaskController extends BaseController {
         if (task.getProjectId() != Long.valueOf(projectId)) {
             throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该项目!");
         }
-        BeanUtils.copyProperties(taskVo, task, new String[]{"id","isAchieved","isFinal","projectId"});
+        BeanUtils.copyProperties(taskVo, task, new String[]{"id", "isAchieved", "isFinal", "projectId"});
         return convert(TaskVo.class, taskService.save(task));
     }
 

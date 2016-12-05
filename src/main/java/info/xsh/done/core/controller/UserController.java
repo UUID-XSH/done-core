@@ -2,6 +2,8 @@ package info.xsh.done.core.controller;
 
 import info.xsh.done.core.controller.vo.UserVo;
 import info.xsh.done.core.domain.User;
+import info.xsh.done.core.exception.DoneProjectException;
+import info.xsh.done.core.exception.ExceptionCode;
 import info.xsh.done.core.service.ProjectService;
 import info.xsh.done.core.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +37,7 @@ public class UserController extends BaseController {
     public UserVo create(@RequestBody UserVo userVo) {
         User user = convertFactory().convert(User.class, userVo);
         user = userService.save(user);
-        return convertFactory().convert(UserVo.class, user);
+        return convert(UserVo.class, user);
     }
 
     /**
@@ -46,8 +48,8 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "users/{userId}", method = RequestMethod.GET)
     public UserVo getById(@PathVariable String userId) {
-        User user = userService.findById(userId).orElseThrow(() -> new IllegalArgumentException("用户不存在"));
-        return convertFactory().convert(UserVo.class, user);
+        User user = userService.findById(userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "用户不存在!"));
+        return convert(UserVo.class, user);
     }
 
     /**
@@ -58,37 +60,37 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "users/name/{userName}", method = RequestMethod.GET)
     public UserVo getByName(@PathVariable String userName) {
-        return convertFactory().convert(UserVo.class, userService.findByName(userName).orElseThrow(() -> new IllegalArgumentException("用户不存在")));
+        return convert(UserVo.class, userService.findByName(userName).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "用户不存在!")));
     }
 
     /**
      * 更新
      *
-     * @param user_id
+     * @param userId
      * @param userVo
      * @return
      */
-    @RequestMapping(value = "users/{user_id}", method = RequestMethod.PUT)
-    public UserVo update(@PathVariable String user_id, @RequestBody UserVo userVo) {
-        User user = userService.findById(user_id).orElseThrow(() -> new IllegalArgumentException("用户不存在"));
-        BeanUtils.copyProperties(userVo, user, new String[]{"id"});
-        return convertFactory().convert(UserVo.class, userService.save(user));
+    @RequestMapping(value = "users/{userId}", method = RequestMethod.PUT)
+    public UserVo update(@PathVariable String userId, @RequestBody UserVo userVo) {
+        User user = userService.findById(userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "用户不存在!"));
+        BeanUtils.copyProperties(userVo, user, new String[]{"id", "registerDate", "recentLoginTime"});
+        return convert(UserVo.class, userService.save(user));
     }
 
     /**
      * 删除
      *
-     * @param user_id
+     * @param userId
      * @return
      */
-    @RequestMapping(value = "users/{user_id}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable String user_id) {
+    @RequestMapping(value = "users/{userId}", method = RequestMethod.DELETE)
+    public String delete(@PathVariable String userId) {
         try {
-            userService.delete(user_id);
+            userService.delete(userId);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new RuntimeException("删除用户失败！");
+            new DoneProjectException(ExceptionCode.UN_KNOW, "删除用户失败!");
         }
-        return "用户ID：" + user_id + "，删除成功！";
+        return "用户ID：" + userId + "，删除成功！";
     }
 }
