@@ -31,12 +31,13 @@ public class GlobalControllerExceptionHandler {
         ResponseStatus responseStatus = AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class);
         if (responseStatus != null) {
             response.setStatus(responseStatus.code().value());
-        }else {
+        } else {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
         }
 
         if (e instanceof DoneProjectException) {
             DoneProjectException doneProjectException = (DoneProjectException) e;
+            response.setStatus(doneProjectException.getHttpStatus().value());
             return new ErrorInfo(doneProjectException.getErrorCode(), doneProjectException.getErrorMsg());
         }
 
