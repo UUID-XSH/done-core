@@ -1,6 +1,5 @@
 package info.xsh.done.core.common.coverter;
 
-import com.google.common.base.Converter;
 import info.xsh.done.core.controller.vo.SingleTaskVo;
 import info.xsh.done.core.controller.vo.TaskVo;
 import info.xsh.done.core.domain.SingleTask;
@@ -12,9 +11,8 @@ import org.springframework.stereotype.Component;
  * Created by xiaohuo on 16/11/30.
  */
 @Component
-public class TaskDoVoConverter extends Converter<Task, TaskVo> {
+public class TaskDoVoConverter {
 
-    @Override
     @Convertor
     public TaskVo doForward(Task task) {
         TaskVo taskVo = new TaskVo();
@@ -28,7 +26,6 @@ public class TaskDoVoConverter extends Converter<Task, TaskVo> {
 
     }
 
-    @Override
     @Convertor
     public Task doBackward(TaskVo taskVo) {
         Task task = new Task();
@@ -39,8 +36,8 @@ public class TaskDoVoConverter extends Converter<Task, TaskVo> {
     }
 
     @Convertor
-    public SingleTaskVo  SingleTaskDoForward(SingleTask singleTask){
-        SingleTaskVo singleTaskVo =new SingleTaskVo();
+    public SingleTaskVo SingleTaskDoForward(SingleTask singleTask) {
+        SingleTaskVo singleTaskVo = new SingleTaskVo();
         singleTaskVo.setId(singleTask.getId());
         singleTaskVo.setName(singleTask.getName());
         singleTaskVo.setDetail(singleTask.getDetail());
@@ -51,8 +48,8 @@ public class TaskDoVoConverter extends Converter<Task, TaskVo> {
     }
 
     @Convertor
-    public SingleTask SingleTaskDoBackward(SingleTaskVo singleTaskVo){
-        SingleTask singleTask =new SingleTask();
+    public SingleTask SingleTaskDoBackward(SingleTaskVo singleTaskVo) {
+        SingleTask singleTask = new SingleTask();
         singleTask.setName(singleTaskVo.getName());
         singleTask.setDetail(singleTaskVo.getDetail());
         return singleTask;

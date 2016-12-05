@@ -34,14 +34,18 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.google.guava', name: 'guava', version: '19.0'
+//    compile group: 'com.google.guava', name: 'guava', version: '19.0'
     compile("org.springframework.boot:spring-boot-starter-web")
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.4'
     compile('org.projectlombok:lombok:1.16.10')
     compile "org.flywaydb:flyway-core:4.0.3"
-//    compile('org.hsqldb:hsqldb')
-    runtime('mysql:mysql-connector-java')
+
     compile 'com.github.yannxia:chameleon:-SNAPSHOT'
+
+    runtime('mysql:mysql-connector-java')
+
+    testCompile group: 'org.easymock', name: 'easymock', version: '3.4'
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.4'
+
 }
