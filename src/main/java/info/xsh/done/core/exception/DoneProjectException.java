@@ -19,4 +19,10 @@ public class DoneProjectException extends RuntimeException {
         this.httpStatus = exceptionCode.getHttpStatus();
         this.errorMsg = String.format(exceptionCode.getErrorMsg(), formatParams);
     }
+
+    public DoneProjectException(ExceptionCode exceptionCode, String errorMsg) {
+        this.errorCode = exceptionCode.getErrorCode();
+        this.httpStatus = exceptionCode.getHttpStatus();
+        this.errorMsg = errorMsg;
+    }
 }

@@ -35,7 +35,7 @@ public class TaskService {
         return singleTaskRepository.save(singleTask);
     }
 
-    public Optional<SingleTask> getById(String taskId){
+    public Optional<SingleTask> getSingleTaskById(String taskId){
         log.info(String.format("Single task to be find: id = %s", taskId));
         return Optional.ofNullable(singleTaskRepository.findOne(Long.valueOf(taskId)));
     }
@@ -61,5 +61,15 @@ public class TaskService {
     public List<Task> getByPid(long pid) {
         return taskRepository.findByProjectId(pid);
     }
+
+    public Optional<Task> getById(String taskId){
+        log.info(String.format("Single task to be find: id = %s", taskId));
+        return Optional.ofNullable(taskRepository.findOne(Long.valueOf(taskId)));
+    }
+
+    public List<Task> getUnfinishedTaskByPid(long pid) {
+        return taskRepository.findByProjectIdAndIsAchieved(pid, Project.YesOrNo.NO);
+    }
+
 
 }

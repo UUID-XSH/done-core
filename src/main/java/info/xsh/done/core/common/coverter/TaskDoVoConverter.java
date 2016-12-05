@@ -31,12 +31,11 @@ public class TaskDoVoConverter {
         Task task = new Task();
         task.setName(taskVo.getName());
         task.setDetail(taskVo.getDetail());
-        task.setProjectId(taskVo.getProjectId());
         return task;
     }
 
     @Convertor
-    public SingleTaskVo SingleTaskDoForward(SingleTask singleTask) {
+    public SingleTaskVo singleTaskDoForward(SingleTask singleTask) {
         SingleTaskVo singleTaskVo = new SingleTaskVo();
         singleTaskVo.setId(singleTask.getId());
         singleTaskVo.setName(singleTask.getName());
@@ -48,7 +47,7 @@ public class TaskDoVoConverter {
     }
 
     @Convertor
-    public SingleTask SingleTaskDoBackward(SingleTaskVo singleTaskVo) {
+    public SingleTask singleTaskDoBackward(SingleTaskVo singleTaskVo) {
         SingleTask singleTask = new SingleTask();
         singleTask.setName(singleTaskVo.getName());
         singleTask.setDetail(singleTaskVo.getDetail());

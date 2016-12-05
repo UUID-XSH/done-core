@@ -13,7 +13,7 @@ public abstract class BaseComponent implements ConvertFactory {
     private ApplicationContext applicationContext;
 
     public ConvertFactory convertFactory() {
-        return applicationContext.getBean(ConvertFactory.class);
+        return applicationContext.getBean("convertFactory", ConvertFactory.class);
     }
 
     public <T> T convert(Class<T> expectClass, Object... params) {
