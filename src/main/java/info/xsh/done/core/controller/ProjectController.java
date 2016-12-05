@@ -67,7 +67,7 @@ public class ProjectController extends BaseController {
     public ProjectVo get(@PathVariable("user_id") String userId, @PathVariable String id) {
         Project project = projectService.findById(id).orElseThrow(() -> new IllegalArgumentException("项目不存在"));
         if (project.getUserId() != Long.valueOf(userId)) {
-            throw new IllegalArgumentException("项目不属于该用户");
+            throw new IllegalArgumentException("项目不属于该用户!");
         }
         ProjectVo projectVo = convertFactory().convert(ProjectVo.class,project);
         List<Task> tasks = taskService.getByPid(project.getId());

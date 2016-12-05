@@ -1,5 +1,6 @@
 package info.xsh.done.core.service;
 
+import info.xsh.done.core.domain.Project;
 import info.xsh.done.core.domain.SingleTask;
 import info.xsh.done.core.domain.Task;
 import info.xsh.done.core.repository.SingleTaskRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by xiaohuo on 16/11/29.
@@ -31,6 +33,19 @@ public class TaskService {
     public SingleTask save(SingleTask singleTask) {
         log.info(String.format("Single task to be save: %s", singleTask.toString()));
         return singleTaskRepository.save(singleTask);
+    }
+
+    public Optional<SingleTask> getById(String taskId){
+        log.info(String.format("Single task to be find: id = %s", taskId));
+        return Optional.ofNullable(singleTaskRepository.findOne(Long.valueOf(taskId)));
+    }
+
+    public Iterable<SingleTask> getUserSingleTask(String userId){
+        return singleTaskRepository.findByUserId(Long.valueOf(userId));
+    }
+
+    public Iterable<SingleTask> getUserUnfinishedSingleTask(String userId){
+        return singleTaskRepository.findByUserIdAndIsAchieved(Long.valueOf(userId), Project.YesOrNo.NO);
     }
 
     public Iterable<Task> getAll() {
