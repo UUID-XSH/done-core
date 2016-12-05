@@ -4,7 +4,6 @@ import info.xsh.done.core.controller.vo.UserVo;
 import info.xsh.done.core.domain.User;
 import info.xsh.done.core.exception.DoneProjectException;
 import info.xsh.done.core.exception.ExceptionCode;
-import info.xsh.done.core.service.ProjectService;
 import info.xsh.done.core.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -23,9 +22,6 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ProjectService projectService;
 
     /**
      * @param userVo

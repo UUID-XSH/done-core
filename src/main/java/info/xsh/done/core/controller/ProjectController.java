@@ -4,6 +4,7 @@ import info.xsh.done.core.controller.vo.ProjectVo;
 import info.xsh.done.core.controller.vo.TaskVo;
 import info.xsh.done.core.domain.Project;
 import info.xsh.done.core.domain.Task;
+import info.xsh.done.core.domain.YesOrNo;
 import info.xsh.done.core.exception.DoneProjectException;
 import info.xsh.done.core.exception.ExceptionCode;
 import info.xsh.done.core.service.ProjectService;
@@ -101,7 +102,7 @@ public class ProjectController extends BaseController {
     @RequestMapping(value = "users/{userId}/projects/{id}", method = RequestMethod.DELETE)
     public ProjectVo delete(@PathVariable Long userId, @PathVariable Long id) {
         Project project = projectService.findByIdAndUserId(id, userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
-        project.setIsArchived(Project.YesOrNo.YES);
+        project.setIsArchived(YesOrNo.YES);
         return convert(ProjectVo.class, projectService.save(project));
     }
 
@@ -115,7 +116,7 @@ public class ProjectController extends BaseController {
     @RequestMapping(value = "users/{userId}/projects/{id}/restore", method = RequestMethod.PUT)
     public ProjectVo restore(@PathVariable Long userId, @PathVariable Long id) {
         Project project = projectService.findByIdAndUserId(id, userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
-        project.setIsArchived(Project.YesOrNo.NO);
+        project.setIsArchived(YesOrNo.NO);
         return convert(ProjectVo.class, projectService.save(project));
     }
 

@@ -1,6 +1,6 @@
 package info.xsh.done.core.controller.vo;
 
-import info.xsh.done.core.domain.Project;
+import info.xsh.done.core.domain.YesOrNo;
 import lombok.Data;
 
 /**
@@ -12,5 +12,5 @@ public class TaskVo {
     private String name; // 任务名称
     private String detail; // 详情
     private Long projectId; //项目id
-    private Project.YesOrNo isAchieved;
+    private YesOrNo isAchieved;
 }

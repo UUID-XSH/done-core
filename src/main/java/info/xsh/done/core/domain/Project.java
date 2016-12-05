@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id",nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id; // 项目id
     @Column(name = "name")
     private String name; // 项目名称
@@ -28,8 +28,4 @@ public class Project {
     private YesOrNo isArchived = YesOrNo.NO; // 是否归档
     @Column(name = "user_id", nullable = false)
     private Long userId;
-
-    public enum YesOrNo {
-        YES, NO
-    }
 }

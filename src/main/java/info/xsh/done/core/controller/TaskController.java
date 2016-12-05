@@ -2,10 +2,7 @@ package info.xsh.done.core.controller;
 
 import info.xsh.done.core.controller.vo.SingleTaskVo;
 import info.xsh.done.core.controller.vo.TaskVo;
-import info.xsh.done.core.domain.Project;
-import info.xsh.done.core.domain.SingleTask;
-import info.xsh.done.core.domain.Task;
-import info.xsh.done.core.domain.User;
+import info.xsh.done.core.domain.*;
 import info.xsh.done.core.exception.DoneProjectException;
 import info.xsh.done.core.exception.ExceptionCode;
 import info.xsh.done.core.service.ProjectService;
@@ -125,7 +122,7 @@ public class TaskController extends BaseController {
     @RequestMapping(value = "users/{userId}/singles/{taskId}", method = RequestMethod.DELETE)
     public SingleTaskVo deleteSingleTask(@PathVariable Long userId, @PathVariable Long taskId) {
         SingleTask singleTask = taskService.getSingleTaskByUserIdAndTaskId(taskId, userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在!"));
-        singleTask.setIsAchieved(Project.YesOrNo.YES);
+        singleTask.setIsAchieved(YesOrNo.YES);
         return convert(SingleTaskVo.class, taskService.save(singleTask));
     }
 
@@ -139,10 +136,7 @@ public class TaskController extends BaseController {
     @RequestMapping(value = "users/{userId}/singles/{taskId}/restore", method = RequestMethod.PUT)
     public SingleTaskVo restoreSingleTask(@PathVariable Long userId, @PathVariable Long taskId) {
         SingleTask singleTask = taskService.getSingleTaskByUserIdAndTaskId(taskId, userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在!"));
-        if (singleTask.getUserId() != Long.valueOf(userId)) {
-            throw new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不属于该用户!");
-        }
-        singleTask.setIsAchieved(Project.YesOrNo.NO);
+        singleTask.setIsAchieved(YesOrNo.NO);
         return convert(SingleTaskVo.class, taskService.save(singleTask));
     }
 
@@ -235,7 +229,7 @@ public class TaskController extends BaseController {
     @RequestMapping(value = "projects/{projectId}/task/{taskId}", method = RequestMethod.DELETE)
     public TaskVo delete(@PathVariable Long projectId, @PathVariable Long taskId) {
         Task task = taskService.getByIdAndProjectId(taskId, projectId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
-        task.setIsAchieved(Project.YesOrNo.YES);
+        task.setIsAchieved(YesOrNo.YES);
         return convert(TaskVo.class, taskService.save(task));
     }
 
@@ -249,7 +243,7 @@ public class TaskController extends BaseController {
     @RequestMapping(value = "projects/{projectId}/task/{taskId}/restore", method = RequestMethod.PUT)
     public TaskVo restore(@PathVariable Long projectId, @PathVariable Long taskId) {
         Task task = taskService.getByIdAndProjectId(taskId, projectId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
-        task.setIsAchieved(Project.YesOrNo.NO);
+        task.setIsAchieved(YesOrNo.NO);
         return convert(TaskVo.class, taskService.save(task));
     }
 

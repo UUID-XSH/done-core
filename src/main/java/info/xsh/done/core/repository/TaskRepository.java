@@ -1,7 +1,7 @@
 package info.xsh.done.core.repository;
 
-import info.xsh.done.core.domain.Project;
 import info.xsh.done.core.domain.Task;
+import info.xsh.done.core.domain.YesOrNo;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +16,5 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
 
     Task getByIdAndProjectId(Long id, Long projectId);
 
-    List<Task> findByProjectIdAndIsAchieved(Long projectId, Project.YesOrNo isAchieved);
+    List<Task> findByProjectIdAndIsAchieved(Long projectId, YesOrNo isAchieved);
 }

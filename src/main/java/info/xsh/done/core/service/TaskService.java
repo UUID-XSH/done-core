@@ -1,8 +1,8 @@
 package info.xsh.done.core.service;
 
-import info.xsh.done.core.domain.Project;
 import info.xsh.done.core.domain.SingleTask;
 import info.xsh.done.core.domain.Task;
+import info.xsh.done.core.domain.YesOrNo;
 import info.xsh.done.core.repository.SingleTaskRepository;
 import info.xsh.done.core.repository.TaskRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ public class TaskService {
     }
 
     public Iterable<SingleTask> getUserUnfinishedSingleTask(String userId) {
-        return singleTaskRepository.findByUserIdAndIsAchieved(Long.valueOf(userId), Project.YesOrNo.NO);
+        return singleTaskRepository.findByUserIdAndIsAchieved(Long.valueOf(userId), YesOrNo.NO);
     }
 
     public Iterable<Task> getAll() {
@@ -67,12 +67,12 @@ public class TaskService {
         return Optional.ofNullable(taskRepository.findOne(taskId));
     }
 
-    public Optional<Task> getByIdAndProjectId(Long taskId,Long projectId) {
-        return Optional.ofNullable(taskRepository.getByIdAndProjectId(taskId,projectId));
+    public Optional<Task> getByIdAndProjectId(Long taskId, Long projectId) {
+        return Optional.ofNullable(taskRepository.getByIdAndProjectId(taskId, projectId));
     }
 
     public List<Task> getUnfinishedTaskByPid(long pid) {
-        return taskRepository.findByProjectIdAndIsAchieved(pid, Project.YesOrNo.NO);
+        return taskRepository.findByProjectIdAndIsAchieved(pid, YesOrNo.NO);
     }
 
 

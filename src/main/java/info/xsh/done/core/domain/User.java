@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "user")
 @Data
-public class User {
+public class User extends BaseDomain {
     @Id
-    @Column(name = "id",nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "name",unique=true)
+    @Column(name = "name", unique = true)
     private String name;
     @Column(name = "pass_word")
     private String passWord;
@@ -24,9 +24,22 @@ public class User {
     private String nickName;
     @Column(name = "email")
     private String email;
-    @Column(name = "register_date")
-    private LocalDateTime registerDate=LocalDateTime.now(); // 创建时间
-    @Column(name = "recent_login_time")
-    private LocalDateTime recentLoginTime=LocalDateTime.now(); // 登录时间
+    @Column(name = "register_at")
+    private LocalDateTime registerDate; // 创建时间
+    @Column(name = "recent_login_time_at")
+    private LocalDateTime recentLoginTime; // 登录时间
+
+    @PrePersist
+    public void prePersist() {
+        registerDate = LocalDateTime.now();
+        recentLoginTime = LocalDateTime.now();
+        super.prePersist();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        recentLoginTime = LocalDateTime.now();
+        super.preUpdate();
+    }
 
 }
