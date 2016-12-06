@@ -149,14 +149,13 @@ public class TaskController extends BaseController {
      * @param projectId
      * @return
      */
-    @RequestMapping(value = "projects/{projectId}/task", method = RequestMethod.POST)
-    public TaskVo save(@RequestBody TaskVo taskVo, @PathVariable Long projectId) {
-        Task task = convertFactory().convert(Task.class, taskVo);
-        Project project = projectService.findById(projectId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
+    @RequestMapping(value = "users/{userId}/projects/{projectId}/task", method = RequestMethod.POST)
+    public TaskVo save(@RequestBody TaskVo taskVo, @PathVariable Long projectId, @PathVariable Long userId) {
+        Task task = convert(Task.class, taskVo);
+        Project project = projectService.findByProjectIdAndUserId(projectId, userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
         task.setProjectId(project.getId());
-        task = taskService.save(task);
         log.info("Task have been save: {}", task.toString());
-        return convert(TaskVo.class, task);
+        return convert(TaskVo.class, taskService.save(task));
     }
 
     /**
@@ -167,9 +166,9 @@ public class TaskController extends BaseController {
      * @param taskId
      * @return
      */
-    @RequestMapping(value = "projects/{projectId}/task/{taskId}", method = RequestMethod.PUT)
-    public TaskVo update(@RequestBody TaskVo taskVo, @PathVariable Long projectId, @PathVariable Long taskId) {
-        Task task = taskService.getByIdAndProjectId(taskId, projectId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
+    @RequestMapping(value = "users/{userId}/projects/{projectId}/task/{taskId}", method = RequestMethod.PUT)
+    public TaskVo update(@RequestBody TaskVo taskVo, @PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long userId) {
+        Task task = taskService.findByUserIdAndProjectIdAndTaskId(userId, projectId, taskId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
         BeanUtils.copyProperties(taskVo, task, new String[]{"id", "projectId"});
         return convert(TaskVo.class, taskService.save(task));
     }
@@ -181,9 +180,9 @@ public class TaskController extends BaseController {
      * @param taskId
      * @return
      */
-    @RequestMapping(value = "projects/{projectId}/task/{taskId}", method = RequestMethod.GET)
-    public TaskVo get(@PathVariable Long projectId, @PathVariable Long taskId) {
-        Task task = taskService.getByIdAndProjectId(taskId, projectId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
+    @RequestMapping(value = "users/{userId}/projects/{projectId}/task/{taskId}", method = RequestMethod.GET)
+    public TaskVo get(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long userId) {
+        Task task = taskService.findByUserIdAndProjectIdAndTaskId(userId, projectId, taskId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
         return convert(TaskVo.class, task);
     }
 
@@ -193,9 +192,9 @@ public class TaskController extends BaseController {
      * @param projectId
      * @return
      */
-    @RequestMapping(value = "projects/{projectId}/task", method = RequestMethod.GET)
-    public List<TaskVo> getAll(@PathVariable String projectId) {
-        List<Task> tasks = taskService.getByPid(Long.valueOf(projectId));
+    @RequestMapping(value = "users/{userId}/projects/{projectId}/task", method = RequestMethod.GET)
+    public List<TaskVo> getAll(@PathVariable Long projectId, @PathVariable Long userId) {
+        List<Task> tasks = taskService.getByUserIdAndProjectId(userId, projectId);
         List<TaskVo> taskVos = new ArrayList<>();
         for (Task task : tasks) {
             taskVos.add(convert(TaskVo.class, task));
@@ -209,9 +208,9 @@ public class TaskController extends BaseController {
      * @param projectId
      * @return
      */
-    @RequestMapping(value = "projects/{projectId}/unfinished", method = RequestMethod.GET)
-    public List<TaskVo> getAllUnfinishedTask(@PathVariable String projectId) {
-        List<Task> tasks = taskService.getUnfinishedTaskByPid(Long.valueOf(projectId));
+    @RequestMapping(value = "users/{userId}/projects/{projectId}/unfinished", method = RequestMethod.GET)
+    public List<TaskVo> getAllUnfinishedTask(@PathVariable Long projectId, @PathVariable Long userId) {
+        List<Task> tasks = taskService.findByUserIdAndProjectIdAndIsAchieved(userId, projectId);
         List<TaskVo> taskVos = new ArrayList<>();
         for (Task task : tasks) {
             taskVos.add(convert(TaskVo.class, task));
@@ -226,9 +225,9 @@ public class TaskController extends BaseController {
      * @param taskId
      * @return
      */
-    @RequestMapping(value = "projects/{projectId}/task/{taskId}", method = RequestMethod.DELETE)
-    public TaskVo delete(@PathVariable Long projectId, @PathVariable Long taskId) {
-        Task task = taskService.getByIdAndProjectId(taskId, projectId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
+    @RequestMapping(value = "users/{userId}/projects/{projectId}/task/{taskId}", method = RequestMethod.DELETE)
+    public TaskVo delete(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long userId) {
+        Task task = taskService.findByUserIdAndProjectIdAndTaskId(userId, projectId, taskId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
         task.setIsAchieved(YesOrNo.YES);
         return convert(TaskVo.class, taskService.save(task));
     }
@@ -240,9 +239,9 @@ public class TaskController extends BaseController {
      * @param taskId
      * @return
      */
-    @RequestMapping(value = "projects/{projectId}/task/{taskId}/restore", method = RequestMethod.PUT)
-    public TaskVo restore(@PathVariable Long projectId, @PathVariable Long taskId) {
-        Task task = taskService.getByIdAndProjectId(taskId, projectId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
+    @RequestMapping(value = "users/{userId}/projects/{projectId}/task/{taskId}/restore", method = RequestMethod.PUT)
+    public TaskVo restore(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long userId) {
+        Task task = taskService.findByUserIdAndProjectIdAndTaskId(userId, projectId, taskId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
         task.setIsAchieved(YesOrNo.NO);
         return convert(TaskVo.class, taskService.save(task));
     }

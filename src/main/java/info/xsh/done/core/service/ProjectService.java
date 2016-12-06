@@ -41,9 +41,8 @@ public class ProjectService {
         return Optional.ofNullable(projectRepository.findOne(Long.valueOf(id)));
     }
 
-    public Optional<Project> findByIdAndUserId(Long id, Long userId) {
+    public Optional<Project> findByProjectIdAndUserId(Long id, Long userId) {
         return Optional.ofNullable(projectRepository.findByIdAndUserId(id, userId));
     }
-
 
 }

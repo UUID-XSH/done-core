@@ -71,9 +71,19 @@ public class TaskService {
         return Optional.ofNullable(taskRepository.getByIdAndProjectId(taskId, projectId));
     }
 
-    public List<Task> getUnfinishedTaskByPid(long pid) {
+    public List<Task> getUnfinishedTaskByPid(Long pid) {
         return taskRepository.findByProjectIdAndIsAchieved(pid, YesOrNo.NO);
     }
 
+    public List<Task> findByUserIdAndProjectIdAndIsAchieved(Long userId,Long pid) {
+        return taskRepository.findByUserIdAndProjectIdAndIsAchieved(userId,pid, YesOrNo.NO.toString());
+    }
 
+    public List<Task> getByUserIdAndProjectId(Long userId, Long projectId) {
+        return taskRepository.findByUserIdAndProjectId(userId, projectId);
+    }
+
+    public Optional<Task> findByUserIdAndProjectIdAndTaskId(Long userId, Long projectId, Long taskId) {
+        return Optional.ofNullable(taskRepository.findByUserIdAndProjectIdAndTaskId(userId, projectId, taskId));
+    }
 }
