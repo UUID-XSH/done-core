@@ -1,0 +1,1 @@
+INSERT INTO user (name, nick_name) VALUES ('test', 'test');
