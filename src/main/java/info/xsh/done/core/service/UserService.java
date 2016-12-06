@@ -19,7 +19,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public User save(User user) {
-        log.info(String.format("save entity: %s", user.toString()));
+        log.info("save entity: {}", user.toString());
         return userRepository.save(user);
     }
 

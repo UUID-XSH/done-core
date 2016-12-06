@@ -30,6 +30,7 @@ public class TaskDoVoConverter {
         Task task = new Task();
         task.setName(taskVo.getName());
         task.setDetail(taskVo.getDetail());
+        task.setIsAchieved(taskVo.getIsAchieved());
         return task;
     }
 
@@ -49,6 +50,7 @@ public class TaskDoVoConverter {
         SingleTask singleTask = new SingleTask();
         singleTask.setName(singleTaskVo.getName());
         singleTask.setDetail(singleTaskVo.getDetail());
+        singleTask.setIsAchieved(singleTaskVo.getIsAchieved());
         return singleTask;
     }
 }

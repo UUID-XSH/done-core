@@ -26,17 +26,17 @@ public class TaskService {
     private SingleTaskRepository singleTaskRepository;
 
     public Task save(Task task) {
-        log.info(String.format("Task to be save: %s", task.toString()));
+        log.info("Task to be save: {}", task.toString());
         return taskRepository.save(task);
     }
 
     public SingleTask save(SingleTask singleTask) {
-        log.info(String.format("Single task to be save: %s", singleTask.toString()));
+        log.info("Single task to be save: {}", singleTask.toString());
         return singleTaskRepository.save(singleTask);
     }
 
     public Optional<SingleTask> getSingleTaskByUserIdAndTaskId(Long id, Long userId) {
-        log.info(String.format("Single task to be find: taskId = %s", id));
+        log.info("Single task to be find: taskId = {}", id);
         return Optional.ofNullable(singleTaskRepository.findByUserIdAndId(userId, id));
     }
 
@@ -63,7 +63,7 @@ public class TaskService {
     }
 
     public Optional<Task> getById(Long taskId) {
-        log.info(String.format("Single task to be find: id = %s", taskId));
+        log.info("Single task to be find: id = {}", taskId);
         return Optional.ofNullable(taskRepository.findOne(taskId));
     }
 

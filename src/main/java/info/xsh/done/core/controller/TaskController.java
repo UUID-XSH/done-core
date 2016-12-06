@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by xiaohuo on 16/11/28.
+ * author : misha
  */
 @RestController
 @RequestMapping(value = "/api/v1.0", produces = "application/json")
@@ -48,7 +48,7 @@ public class TaskController extends BaseController {
         User user = userService.findById(userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在!"));
         singleTask.setUserId(user.getId());
         singleTask = taskService.save(singleTask);
-        log.info(String.format("Single task have been save: %s", singleTask.toString()));
+        log.info("Single task have been save:{}", singleTask.toString());
         return convert(SingleTaskVo.class, singleTask);
     }
 
@@ -63,7 +63,7 @@ public class TaskController extends BaseController {
     @RequestMapping(value = "users/{userId}/singles/{taskId}", method = RequestMethod.PUT)
     public SingleTaskVo update(@RequestBody SingleTaskVo singleTaskVo, @PathVariable Long userId, @PathVariable Long taskId) {
         SingleTask singleTask = taskService.getSingleTaskByUserIdAndTaskId(taskId, userId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在!"));
-        BeanUtils.copyProperties(singleTaskVo, singleTask, new String[]{"id", "isAchieved", "isFinal", "userId"});
+        BeanUtils.copyProperties(singleTaskVo, singleTask, new String[]{"id", "userId"});
         return convert(SingleTaskVo.class, taskService.save(singleTask));
     }
 
@@ -155,7 +155,7 @@ public class TaskController extends BaseController {
         Project project = projectService.findById(projectId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "项目不存在！"));
         task.setProjectId(project.getId());
         task = taskService.save(task);
-        log.info(String.format("Task have been save: %s", task.toString()));
+        log.info("Task have been save: {}", task.toString());
         return convert(TaskVo.class, task);
     }
 
@@ -170,7 +170,7 @@ public class TaskController extends BaseController {
     @RequestMapping(value = "projects/{projectId}/task/{taskId}", method = RequestMethod.PUT)
     public TaskVo update(@RequestBody TaskVo taskVo, @PathVariable Long projectId, @PathVariable Long taskId) {
         Task task = taskService.getByIdAndProjectId(taskId, projectId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
-        BeanUtils.copyProperties(taskVo, task, new String[]{"id", "isAchieved", "isFinal", "projectId"});
+        BeanUtils.copyProperties(taskVo, task, new String[]{"id", "projectId"});
         return convert(TaskVo.class, taskService.save(task));
     }
 

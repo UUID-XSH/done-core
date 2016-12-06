@@ -47,9 +47,11 @@ CREATE TABLE `Single_task` (
 #
 CREATE TABLE `tomato` (
   `id`         BIGINT AUTO_INCREMENT,
-  `start_time` TIMESTAMP,
-  `end_time`   TIMESTAMP,
+  `start_at` TIMESTAMP,
+  `end_at`   TIMESTAMP,
   `task_id`    BIGINT,
+  `tomato_time` INT,
+  `is_canceled` VARCHAR(50),
   PRIMARY KEY (`id`),
   FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
 );
