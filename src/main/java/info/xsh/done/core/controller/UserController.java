@@ -31,7 +31,7 @@ public class UserController extends BaseController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "users", method = RequestMethod.POST)
     public UserVo create(@RequestBody UserVo userVo) {
-        User user = convertFactory().convert(User.class, userVo);
+        User user = convert(User.class, userVo);
         user = userService.save(user);
         return convert(UserVo.class, user);
     }

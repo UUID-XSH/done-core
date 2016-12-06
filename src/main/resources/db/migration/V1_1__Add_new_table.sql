@@ -49,9 +49,10 @@ CREATE TABLE `tomato` (
   `id`         BIGINT AUTO_INCREMENT,
   `start_at` DATETIME DEFAULT NULL,
   `end_at`   DATETIME DEFAULT NULL ,
-  `task_id`    BIGINT,
+#   `task_id`    BIGINT,
   `tomato_time` INT,
   `is_canceled` VARCHAR(50),
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
+  `is_achieved` VARCHAR(50),
+  PRIMARY KEY (`id`)
+#   FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
 );

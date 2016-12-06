@@ -19,6 +19,7 @@ public class TimerConverter {
         timer.setTaskId(timerVo.getTaskId());
         timer.setTomatoTime(timerVo.getTomatoTime());
         timer.setIsCanceled(timerVo.getIsCanceled());
+        timer.setIsAchieved(timerVo.getIsAchieved());
         return timer;
     }
 
@@ -28,9 +29,9 @@ public class TimerConverter {
         timerVo.setTaskId(timer.getTaskId());
         timerVo.setStartDate(timer.getStartDate());
         timerVo.setEndTime(timer.getEndTime());
-        timerVo.setId(timer.getId());
         timerVo.setTomatoTime(timer.getTomatoTime());
         timerVo.setIsCanceled(timer.getIsCanceled());
+        timerVo.setIsAchieved(timer.getIsAchieved());
         return timerVo;
     }
 }

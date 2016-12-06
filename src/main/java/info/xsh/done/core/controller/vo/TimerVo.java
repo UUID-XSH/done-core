@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
  */
 @Data
 public class TimerVo {
-    private Long id;
+    private Long taskId;
     private LocalDateTime startDate; // 开始时间
     private LocalDateTime endTime; // 结束时间
-    private Long taskId;
     private int tomatoTime;
     private YesOrNo isCanceled;
+    private YesOrNo isAchieved;
 }

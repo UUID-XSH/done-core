@@ -17,4 +17,8 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     Task getByIdAndProjectId(Long id, Long projectId);
 
     List<Task> findByProjectIdAndIsAchieved(Long projectId, YesOrNo isAchieved);
+
+//
+//    @Query("select t from Task t join Project p where p.userId = :userId and p.id = :projectId")
+//    List<Task> findByUserIdAndProjectId(Long userId, Long projectId);
 }
