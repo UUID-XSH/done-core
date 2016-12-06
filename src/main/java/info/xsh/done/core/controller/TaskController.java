@@ -147,6 +147,7 @@ public class TaskController extends BaseController {
      *
      * @param taskVo
      * @param projectId
+     * @param userId
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects/{projectId}/task", method = RequestMethod.POST)
@@ -164,8 +165,10 @@ public class TaskController extends BaseController {
      * @param taskVo
      * @param projectId
      * @param taskId
+     * @param userId
      * @return
      */
+
     @RequestMapping(value = "users/{userId}/projects/{projectId}/task/{taskId}", method = RequestMethod.PUT)
     public TaskVo update(@RequestBody TaskVo taskVo, @PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long userId) {
         Task task = taskService.findByUserIdAndProjectIdAndTaskId(userId, projectId, taskId).orElseThrow(() -> new DoneProjectException(ExceptionCode.NOT_FOUND, "任务不存在！"));
@@ -178,6 +181,7 @@ public class TaskController extends BaseController {
      *
      * @param projectId
      * @param taskId
+     * @param userId
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects/{projectId}/task/{taskId}", method = RequestMethod.GET)
@@ -190,6 +194,7 @@ public class TaskController extends BaseController {
      * 指定project的全部task
      *
      * @param projectId
+     * @param userId
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects/{projectId}/task", method = RequestMethod.GET)
@@ -206,6 +211,7 @@ public class TaskController extends BaseController {
      * 指定project的全部未完成的task
      *
      * @param projectId
+     * @param userId
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects/{projectId}/unfinished", method = RequestMethod.GET)
@@ -223,6 +229,7 @@ public class TaskController extends BaseController {
      *
      * @param projectId
      * @param taskId
+     * @param userId
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects/{projectId}/task/{taskId}", method = RequestMethod.DELETE)
@@ -237,6 +244,7 @@ public class TaskController extends BaseController {
      *
      * @param projectId
      * @param taskId
+     * @param userId
      * @return
      */
     @RequestMapping(value = "users/{userId}/projects/{projectId}/task/{taskId}/restore", method = RequestMethod.PUT)

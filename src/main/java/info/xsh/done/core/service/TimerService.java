@@ -26,5 +26,9 @@ public class TimerService {
         return Optional.ofNullable(timerRepository.findByTaskId(taskId));
     }
 
+    public Optional<Timer> findByUserIdAndProjectIdAndTaskId(Long userId,Long projectId,Long taskId) {
+        return Optional.ofNullable(timerRepository.findByUserIdAndProjectIdAndTaskId(userId,projectId,taskId));
+    }
+
 
 }
