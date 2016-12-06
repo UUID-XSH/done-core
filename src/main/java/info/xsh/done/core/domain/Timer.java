@@ -16,14 +16,19 @@ public class Timer extends BaseDomain {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(name = "start_at")
     private LocalDateTime startDate; // 开始时间
+
     @Column(name = "end_at")
     private LocalDateTime endTime; // 结束时间
+
     @Column(name = "tomato_time")
     private int tomatoTime = 25; // 持续时间
+
     @Column(name = "task_id", nullable = false)
     private Long taskId;
+
     @Column(name = "is_canceled")
     @Enumerated(EnumType.STRING)
     private YesOrNo isCanceled = YesOrNo.NO; //是否取消

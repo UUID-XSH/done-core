@@ -16,16 +16,22 @@ public class User extends BaseDomain {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(name = "name", unique = true)
     private String name;
+
     @Column(name = "pass_word")
     private String passWord;
+
     @Column(name = "nick_name")
     private String nickName;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "register_at")
     private LocalDateTime registerDate; // 创建时间
+
     @Column(name = "recent_login_time_at")
     private LocalDateTime recentLoginTime; // 登录时间
 
