@@ -5,8 +5,8 @@ CREATE TABLE `User` (
   `pass_word` VARCHAR(50),
   `nick_name` VARCHAR(100),
   `email` VARCHAR(200),
-  `register_date` TIMESTAMP,
-  `recent_login_time` TIMESTAMP,
+  `register_at` TIMESTAMP,
+  `recent_login_time_at` TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
@@ -27,6 +27,7 @@ CREATE TABLE `Task` (
   `id`         BIGINT AUTO_INCREMENT,
   `name`       VARCHAR(50),
   `detail`     VARCHAR(1000),
+  `is_achieved` VARCHAR(50),
   `project_id` BIGINT,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`project_id`) REFERENCES `Project` (`id`)
@@ -39,7 +40,6 @@ CREATE TABLE `Single_task` (
   `detail`     VARCHAR(1000),
   `user_id` BIGINT,
   `is_achieved` VARCHAR(50),
-  `is_final` VARCHAR(50),
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
 );

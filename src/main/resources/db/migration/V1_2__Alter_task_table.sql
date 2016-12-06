@@ -1,13 +1,3 @@
-# ALTER TABLE task
-
-ALTER TABLE `task`
-  ADD `is_achieved` VARCHAR(50),
-  ADD `is_final` VARCHAR(50);
-
-# ALTER TABLE sub_task
-# ALTER TABLE `sub_task`
-#   ADD `is_achieved` VARCHAR(50);
-
 # ADD TABLE tag
 CREATE TABLE `tag` (
   `id`      BIGINT AUTO_INCREMENT,
