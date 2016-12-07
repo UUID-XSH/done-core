@@ -3,6 +3,7 @@ package info.xsh.done.core.controller.vo;
 import info.xsh.done.core.domain.YesOrNo;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -10,10 +11,17 @@ import java.time.LocalDateTime;
  */
 @Data
 public class TimerVo {
+
+    @NotNull
     private Long taskId;
+
     private LocalDateTime startDate; // 开始时间
+
     private LocalDateTime endTime; // 结束时间
-    private int tomatoTime;
+
+    private int tomatoTime = 25;
+
     private YesOrNo isCanceled;
+
     private YesOrNo isAchieved;
 }

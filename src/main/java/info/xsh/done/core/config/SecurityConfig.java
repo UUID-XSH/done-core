@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().and()
-                .logout().and()
+                .logout().invalidateHttpSession(true).deleteCookies().and()
                 .authorizeRequests()
                 .anyRequest().fullyAuthenticated().and()
                 .csrf().disable();

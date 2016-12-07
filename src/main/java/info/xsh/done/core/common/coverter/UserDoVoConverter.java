@@ -18,6 +18,7 @@ public class UserDoVoConverter {
         user.setName(userVo.getName());
         user.setEmail(userVo.getEmail());
         user.setNickName(userVo.getNickName());
+        user.setRole(userVo.getRole());
         return user;
     }
 
@@ -31,6 +32,7 @@ public class UserDoVoConverter {
         userVo.setNickName(user.getNickName());
         userVo.setRecentLoginTime(user.getRecentLoginTime());
         userVo.setRegisterDate(user.getRegisterDate());
+        userVo.setRole(user.getRole());
         return userVo;
     }
 

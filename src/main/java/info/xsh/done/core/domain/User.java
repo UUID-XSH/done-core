@@ -26,8 +26,12 @@ public class User extends BaseDomain {
     @Column(name = "nick_name")
     private String nickName;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
+
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "register_at")
     private LocalDateTime registerDate; // 创建时间
