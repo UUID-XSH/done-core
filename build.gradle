@@ -47,4 +47,8 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.193'
 
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.4.1.RELEASE'
+
+
 }
