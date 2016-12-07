@@ -4,10 +4,12 @@ import info.xsh.done.core.BaseComponent;
 import info.xsh.done.core.controller.vo.TagVo;
 import info.xsh.done.core.domain.Tag;
 import info.xsh.done.core.service.TagService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping(value = "/api/v1.0/users/{userId}", produces = "application/json")
+@Slf4j
 public class TagController extends BaseComponent {
 
     @Autowired
@@ -60,14 +63,42 @@ public class TagController extends BaseComponent {
 
     /**
      * 给该用户下某个任务添加标签
-     * TODO:用户是否可以操作任务
+     * TODO:判断用户是否可以操作任务
      *
      * @param tagId
      * @param taskId
      */
-    @RequestMapping(value = "/tags/{tagId}/tasks/{taskId}", method = RequestMethod.PUT)
-    public void distribute(@PathVariable long tagId, @PathVariable long taskId) {
+    @RequestMapping(value = "/tasks/{taskId}/tags/{tagId}", method = RequestMethod.PUT)
+    public void bindTaskAndTag(@PathVariable long tagId, @PathVariable long taskId) {
         tagService.distribute(tagId, taskId);
     }
+
+    /**
+     * 查询当前任务下所有的标签
+     * TODO:判断用户是否可以操作任务
+     *
+     * @param taskId
+     * @return
+     */
+    @RequestMapping(value = "/tasks/{task_id}/tags", method = RequestMethod.GET)
+    public List<TagVo> listTagsForSpecificTask(@PathVariable(name = "task_id") long taskId) {
+        List<Tag> tags = new ArrayList<>();
+        tagService.listTagsForSpecificTask(taskId).iterator().forEachRemaining(tags::add);
+        log.info(String.format("tags: %s", tags));
+        return tags.stream().map(tag -> convert(TagVo.class, tag)).collect(Collectors.toList());
+    }
+
+    /**
+     * 给该用户下某个任务删除标签
+     * TODO:判断用户是否可以操作任务
+     *
+     * @param tagId
+     * @param taskId
+     */
+    @RequestMapping(value = "/tasks/{task_id}/tags/{tag_id}", method = RequestMethod.DELETE)
+    public void unbindTaskAndTag(@PathVariable(name = "task_id") long taskId, @PathVariable(name = "tag_id") long tagId) {
+        tagService.undistribute(tagId, taskId);
+    }
+
 
 }

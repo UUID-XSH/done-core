@@ -63,7 +63,7 @@ public class TaskService {
     }
 
     public Optional<Task> getById(Long taskId) {
-        log.info("Single task to be find: id = {}", taskId);
+        log.info("task to be find: id = {}", taskId);
         return Optional.ofNullable(taskRepository.findOne(taskId));
     }
 

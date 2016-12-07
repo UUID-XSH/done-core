@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by xiaohuo on 16/12/7.
@@ -94,7 +95,37 @@ public class TagService extends BaseComponent {
         } else {
             throw new RuntimeException("标签不存在或者任务不存在");
         }
+    }
 
+    /**
+     * 删除任务与标签之间的关系
+     *
+     * @param tagId
+     * @param taskId
+     */
+    public void undistribute(long tagId, long taskId) {
+        Optional<TaskTag> taskTagOptional = taskTagRepository.findByTaskIdAndTagId(taskId, tagId);
+        if (taskTagOptional.isPresent()) {
+            taskTagRepository.delete(taskTagOptional.get());
+        } else {
+            throw new RuntimeException("标签不存在");
+        }
+    }
+
+    /**
+     * 查询给定任务下标签
+     *
+     * @param taskId
+     * @return
+     */
+    public Iterable<Tag> listTagsForSpecificTask(long taskId) {
+        List<TaskTag> taskTags = taskTagRepository.findByTaskId(taskId);
+        log.info(String.format("find taskTag %s", taskTags));
+        Iterable<Tag> tags = tagRepository.findAll(taskTags.stream().map(TaskTag::getId).collect(Collectors.toList()));
+        for (Tag tag : tags) {
+            log.info(String.format("this is %s", tag));
+        }
+        return tags;
     }
 
 
