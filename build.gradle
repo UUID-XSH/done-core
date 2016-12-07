@@ -39,7 +39,7 @@ dependencies {
     compile('org.projectlombok:lombok:1.16.10')
     compile "org.flywaydb:flyway-core:4.0.3"
 
-    compile 'com.github.yannxia:chameleon:-SNAPSHOT'
+    compile 'com.github.yannxia:chameleon:0.1-SNAPSHOT'
 
     runtime('mysql:mysql-connector-java')
 
