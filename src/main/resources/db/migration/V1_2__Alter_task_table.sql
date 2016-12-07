@@ -9,9 +9,10 @@ CREATE TABLE `tag` (
 
 # ADD TASK_TAG
 CREATE TABLE `task_tag` (
+  `id` BIGINT AUTO_INCREMENT,
   `task_id` BIGINT,
   `tag_id`  BIGINT,
-  PRIMARY KEY (`task_id`, `tag_id`),
+  PRIMARY KEY (`id`),
   FOREIGN KEY (`task_id`) REFERENCES `task` (`id`),
   FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`)
 )
