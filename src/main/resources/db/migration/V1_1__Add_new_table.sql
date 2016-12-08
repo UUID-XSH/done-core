@@ -5,6 +5,7 @@ CREATE TABLE `user` (
   `pass_word`            VARCHAR(50),
   `nick_name`            VARCHAR(100),
   `email`                VARCHAR(200),
+  `role`                 VARCHAR(50) COMMENT '角色',
   `register_at`          DATETIME DEFAULT NULL,
   `recent_login_time_at` DATETIME DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -12,7 +13,7 @@ CREATE TABLE `user` (
 
 # project
 CREATE TABLE `project` (
-  `id`          BIGINT AUTO_INCREMENT,
+  `id`          BIGINT   AUTO_INCREMENT,
   `name`        VARCHAR(1000),
   `create_time` DATETIME DEFAULT NULL,
   `achieved`    VARCHAR(50) COMMENT '是否完成',
@@ -46,13 +47,13 @@ CREATE TABLE `single_task` (
 
 #
 CREATE TABLE `tomato` (
-  `id`         BIGINT AUTO_INCREMENT,
-  `start_at` DATETIME DEFAULT NULL,
-  `end_at`   DATETIME DEFAULT NULL ,
-#   `task_id`    BIGINT,
+  `id`          BIGINT   AUTO_INCREMENT,
+  `start_at`    DATETIME DEFAULT NULL,
+  `end_at`      DATETIME DEFAULT NULL,
+  #   `task_id`    BIGINT,
   `tomato_time` INT,
   `is_canceled` VARCHAR(50),
   `is_achieved` VARCHAR(50),
   PRIMARY KEY (`id`)
-#   FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
+  #   FOREIGN KEY (`task_id`) REFERENCES `task` (`id`)
 );

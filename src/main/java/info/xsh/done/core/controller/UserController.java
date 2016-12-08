@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -30,7 +31,7 @@ public class UserController extends BaseController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "users", method = RequestMethod.POST)
-    public UserVo create(@RequestBody UserVo userVo) {
+    public UserVo create(@RequestBody @Validated UserVo userVo) {
         User user = convert(User.class, userVo);
         user = userService.save(user);
         return convert(UserVo.class, user);
@@ -89,4 +90,5 @@ public class UserController extends BaseController {
         }
         return true;
     }
+
 }
