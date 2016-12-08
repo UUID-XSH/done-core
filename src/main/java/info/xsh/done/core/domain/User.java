@@ -21,7 +21,7 @@ public class User extends BaseDomain {
     private String name;
 
     @Column(name = "pass_word")
-    private String passWord;
+    private String password;
 
     @Column(name = "nick_name")
     private String nickName;

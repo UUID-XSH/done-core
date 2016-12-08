@@ -33,7 +33,7 @@ public class UserCreateFormValidator implements Validator {
     }
 
     private void validatePasswords(Errors errors, UserVo form) {
-        if (!form.getPassWord().equals(form.getPassWordRepeated())) {
+        if (!form.getPassword().equals(form.getPasswordRepeated())) {
             errors.reject("password.no_match", "Passwords do not match");
         }
     }

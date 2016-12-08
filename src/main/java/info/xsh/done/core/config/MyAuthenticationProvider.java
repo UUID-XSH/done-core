@@ -36,11 +36,11 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 
         User user = userInfoRepository.findByName(username);
 
-        if (!user.getPassWord().equalsIgnoreCase(EncryptUtils.encodeMD5String(password))) {
+        if (!user.getPassword().equalsIgnoreCase(EncryptUtils.encodeMD5String(password))) {
             throw new BadCredentialsException("Bad Credentials");
         }
 
-        user.setPassWord("");
+        user.setPassword("");
 
         return new UsernamePasswordAuthenticationToken(user.getName(), null, getAuthorities(user));
     }

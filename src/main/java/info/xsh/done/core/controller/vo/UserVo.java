@@ -19,10 +19,10 @@ public class UserVo {
     private String name; //用户名
 
     @NotEmpty
-    private String passWord; //用户密码
+    private String password; //用户密码
 
     @NotEmpty
-    private String passWordRepeated;
+    private String passwordRepeated;
 
     private String nickName;
 
