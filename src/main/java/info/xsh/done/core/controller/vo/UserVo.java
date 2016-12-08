@@ -1,6 +1,7 @@
 package info.xsh.done.core.controller.vo;
 
 import info.xsh.done.core.domain.Role;
+import info.xsh.done.core.validator.UserCreateFormAnnotation;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -11,14 +12,15 @@ import java.time.LocalDateTime;
  * Created by yangxueying on 2016/12/1.
  */
 @Data
+@UserCreateFormAnnotation
 public class UserVo {
 
     private Long id; //用户id
 
-    @NotEmpty
+    @NotEmpty(message = "1111")
     private String name; //用户名
 
-    @NotEmpty
+    @NotEmpty(message = "1111")
     private String password; //用户密码
 
     @NotEmpty

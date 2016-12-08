@@ -5,12 +5,11 @@ import info.xsh.done.core.domain.User;
 import info.xsh.done.core.exception.DoneProjectException;
 import info.xsh.done.core.exception.ExceptionCode;
 import info.xsh.done.core.service.UserService;
-import info.xsh.done.core.validator.UserCreateFormValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.WebDataBinder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,19 +24,6 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserCreateFormValidator userCreateFormValidator;
-
-    /**
-     * 验证userVo 的密码重复是否一致  邮箱是否数据库已存在
-     *
-     * @param binder
-     */
-    @InitBinder("userVo")
-    public void initBinder(WebDataBinder binder) {
-        binder.addValidators(userCreateFormValidator);
-    }
-
     /**
      * @param userVo
      * @return
@@ -45,7 +31,7 @@ public class UserController extends BaseController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "users", method = RequestMethod.POST)
-    public UserVo create(@RequestBody UserVo userVo) {
+    public UserVo create(@RequestBody @Validated UserVo userVo) {
         User user = convert(User.class, userVo);
         user = userService.save(user);
         return convert(UserVo.class, user);
