@@ -22,9 +22,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().and()
-                .logout().invalidateHttpSession(true).deleteCookies().and()
                 .authorizeRequests()
-                .anyRequest().fullyAuthenticated().and()
+                .antMatchers("/test").permitAll()
+                .antMatchers("/user/**").hasRole("USER")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login-error")
+                .and()
+                .logout()
+                .permitAll()
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+                .and()
                 .csrf().disable();
 
     }
