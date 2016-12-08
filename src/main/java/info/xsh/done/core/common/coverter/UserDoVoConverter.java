@@ -14,10 +14,11 @@ public class UserDoVoConverter {
     @Convertor
     public User doForward(UserVo userVo) {
         User user = new User();
-        user.setPassWord(userVo.getPassWord());
+        user.setPassword(userVo.getPassword());
         user.setName(userVo.getName());
         user.setEmail(userVo.getEmail());
         user.setNickName(userVo.getNickName());
+        user.setRole(userVo.getRole());
         return user;
     }
 
@@ -26,11 +27,12 @@ public class UserDoVoConverter {
         UserVo userVo = new UserVo();
         userVo.setId(user.getId());
         userVo.setName(user.getName());
-        userVo.setPassWord(user.getPassWord());
+        userVo.setPassword(user.getPassword());
         userVo.setEmail(user.getEmail());
         userVo.setNickName(user.getNickName());
         userVo.setRecentLoginTime(user.getRecentLoginTime());
         userVo.setRegisterDate(user.getRegisterDate());
+        userVo.setRole(user.getRole());
         return userVo;
     }
 
