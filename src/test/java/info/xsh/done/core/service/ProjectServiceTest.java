@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import info.xsh.done.core.DoneApplication;
@@ -25,10 +26,13 @@ public class ProjectServiceTest {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private ConversionService conversionService;
+
 	@Before
 	public void setup() {
 		project = new Project();
-		project.setId(1);
+		project.setId(1L);
 		project.setName("CPP学习");
 	}
 

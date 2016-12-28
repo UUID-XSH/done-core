@@ -16,12 +16,12 @@ apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 
 jar {
-    baseName = 'myproject'
-    version = '0.0.1-SNAPSHOT'
+    baseName = 'done-core'
+    version = 'SNAPSHOT'
 }
 
 bootRepackage {
-    mainClass = 'info.xsh.down.core.DoneApplication'
+    mainClass = 'info.xsh.done.core.DoneApplication'
 }
 
 springBoot {
